@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Match } from '../../model/Match';
 import { MatchService } from '../../app/match.service';
-import { NavController } from 'ionic-angular';
-import { Observable } from 'rxjs/Observable';
+import { NavController, PopoverController } from 'ionic-angular';
 import { CleanUp } from '../../app/Cleanup';
 
 @Component({
@@ -13,6 +12,7 @@ export class SchedulePage extends CleanUp implements OnInit {
   matches: Array<Match>;  // todo convert to RxJS
 
   constructor(public navCtrl: NavController,
+              public popoverCtrl: PopoverController,
               private matchService: MatchService) {
     super();
   }
@@ -21,8 +21,12 @@ export class SchedulePage extends CleanUp implements OnInit {
     this.matchService.fetchAll()
       .takeUntil(this.ngUnsubscribe)
       .subscribe(matches => {
-        console.log(`matches: ${JSON.stringify(matches)}`);
         this.matches = matches
       });
   }
+
+  // openFilterPopover() {
+  //   const popover = this.popoverCtrl.create(MatchFilterPopoverComponent);
+  //   popover.present();
+  // }
 }

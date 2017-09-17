@@ -2,33 +2,35 @@ import { Team } from './Team';
 import { Match } from './Match';
 
 export namespace db {
-  export const teams: Array<Team> = [
-    {
-      name:     'Bears',
-      division: 'C',
-      logoURL:  'some-icon.png'
+  const _teams = {
+    'bears': {
+        name:     'Bears',
+        division: 'C',
+        logoURL:  'some-icon.png'
     },
-    {
-      name:     'Hawks',
-      division: 'C',
-      logoURL:  'some-other-icon.png'
+    'hawks': {
+        name:     'Hawks',
+        division: 'C',
+        logoURL:  'some-other-icon.png'
     }
-  ];
+  };
+
+  export const teams: Array<Team> = Object.keys(_teams).map(key => _teams[key]);
 
   export const matches: Array<Match> = [
     {
       date: new Date(),
       rink: 'Botany',
-      away: 'bears',
+      away: _teams['bears'],
       awayScore: 5,
-      home: 'hawks',
+      home: _teams['hawks'],
       homeScore: 2
     },
     {
       date: new Date(),
       rink: 'Avondale',
-      away: 'hawks',
-      home: 'bears'
+      away: _teams['hawks'],
+      home: _teams['bears']
     },
   ];
 }

@@ -6,6 +6,10 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class TeamsService {
+  fetchAll(): Observable<Array<Team>> {
+    return new BehaviorSubject(db.teams);
+  }
+
   fetch(teamName: string): Observable<Team> {
     const team = db.teams.find((t: Team) => t.name.toLowerCase() === teamName.toLowerCase());
     return new BehaviorSubject(team);

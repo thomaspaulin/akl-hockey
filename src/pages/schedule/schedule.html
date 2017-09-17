@@ -8,7 +8,5 @@
 </ion-header>
 
 <ion-content class="cards-bg">
-  <match-card *ngFor="let match of matches" [match]="match">
-    {{ match | json }}
-  </match-card>
+  <match-card *ngFor="let match of matches" [match]="match"></match-card>
 </ion-content>
