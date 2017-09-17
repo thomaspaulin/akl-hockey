@@ -1,28 +1,22 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { Team } from '../../model/Team';
 import { db } from '../../model/dummy-data';
+import { TeamDetailPage } from '../team-detail/team-detail';
 
 @Component({
-  selector: 'team-list',
+  selector: 'team-list-page',
   templateUrl: 'team-list.html'
 })
 export class TeamListPage {
-  selectedTeam: Team;
   teams: Array<Team>;
 
-  // "Ionic 2’s navigation module caches views in the DOM the same way Ionic 1 does, so the view is generally only
-  // loaded once"
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    // If we navigated to this page, we will have an item available as a nav param
-    this.selectedTeam = navParams.get('team');
-
+  constructor(public navCtrl: NavController) {
     this.teams = db.teams;
   }
 
   itemTapped(event, team) {
-    // That's right, we're pushing to ourselves!
-    this.navCtrl.push(TeamListPage, {
+    this.navCtrl.push(TeamDetailPage, {
       team: team
     });
   }

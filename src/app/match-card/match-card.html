@@ -1,0 +1,38 @@
+<ion-card *ngIf="match">
+  <ion-card-header>
+    <div class="card-row">
+      <div class="time">
+        {{match.date | date:'shortTime'}}
+      </div>
+      &nbsp;
+      <div class="date">
+        ({{match.date | date:'EEEE d MMMM'}})
+      </div>
+    </div>
+  </ion-card-header>
+  <ion-card-content>
+    <div class="card-row team-row">
+      <div class="team">
+        <img src="{{away.logoURL}}" alt="{{away.name}}" title="{{away.name}}">
+        {{away.name}}
+      </div>
+      <div class="score">
+        <b>{{match.awayScore}}</b>
+      </div>
+    </div>
+
+    <div class="card-row team-row">
+      <div class="team">
+        <img src="{{home.logoURL}}" alt="{{home.name}}" title="{{home.name}}">
+        {{home.name}}
+      </div>
+      <div class="score">
+        <b>{{match.homeScore}}</b>
+      </div>
+    </div>
+
+    <div class="card-footer">
+      {{match.rink}}
+    </div>
+  </ion-card-content>
+</ion-card>

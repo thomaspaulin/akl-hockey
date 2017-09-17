@@ -1,0 +1,41 @@
+ion-card {
+  .card-row {
+    display: flex;
+  }
+}
+
+ion-card-header {
+  .date {
+    color: rgba(0, 0, 0, 0.40);
+  }
+}
+
+ion-card-content {
+  display: flex;
+  flex-direction: column;
+
+  .team-row {
+    margin-bottom: 12px;
+    font-size: 20px;
+  }
+
+  div.team {
+    display: flex;
+    align-items: center;
+
+    img {
+      display: inline-block;
+      width: 32px;
+      height: 32px;
+      margin-right: 5px;
+    }
+  }
+
+  div.score {
+    margin-left: auto;
+  }
+
+  .card-footer {
+
+  }
+}
