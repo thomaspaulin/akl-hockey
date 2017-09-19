@@ -3,7 +3,7 @@ export class Filter {
   value: any;
 }
 
-export function filterObject(obj: any, filters: Filter[]): boolean {
+export function filterObject(obj: any, filters: Array<Filter>): boolean {
   if(!obj) {
     return false;
   } else {

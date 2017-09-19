@@ -21,16 +21,16 @@ export namespace db {
     {
       date: new Date(),
       rink: 'Botany',
-      away: _teams['bears'],
+      away: 'bears',
       awayScore: 5,
-      home: _teams['hawks'],
+      home: 'hawks',
       homeScore: 2
     },
     {
       date: new Date(),
       rink: 'Avondale',
-      away: _teams['hawks'],
-      home: _teams['bears']
+      away: 'hawks',
+      home: 'bears'
     },
   ];
 }

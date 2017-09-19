@@ -3,8 +3,8 @@ import { Team } from './Team';
 export class Match {
   date: Date;
   rink: string;
-  away: Team;
-  home: Team;
+  away: string;
+  home: string;
   awayScore?: number;
   homeScore?: number;
 }
