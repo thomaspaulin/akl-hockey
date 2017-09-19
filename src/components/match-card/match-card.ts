@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core
 import { Team } from '../../model/Team';
 
 @Component({
-  selector: 'match-card',
-  templateUrl: 'match-card.html',
+  selector:        'match-card',
+  templateUrl:     'src/components/match-card/match-card.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MatchCardComponent implements OnInit {

@@ -10,8 +10,8 @@ import { TeamListPage } from '../pages/team-list/team-list';
 import { TeamDetailPage } from '../pages/team-detail/team-detail';
 import { SchedulePage } from '../pages/schedule/schedule';
 import { MatchService } from './match.service';
-import { MatchCardComponent } from './match-card/match-card.component';
 import { TeamsService } from './teams.service';
+import { ComponentsModule } from '../components/components.module';
 
 @NgModule({
   declarations: [
@@ -19,10 +19,10 @@ import { TeamsService } from './teams.service';
     TeamListPage,
     TeamDetailPage,
     SchedulePage,
-    MatchCardComponent
   ],
   imports: [
     BrowserModule,
+    ComponentsModule,
     IonicModule.forRoot(MyApp, { mode: 'md' }),
   ],
   bootstrap: [IonicApp],
