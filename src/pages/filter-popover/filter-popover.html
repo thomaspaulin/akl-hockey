@@ -5,6 +5,7 @@
     <ion-select [(ngModel)]="team" multiple="true">
       <ion-option *ngFor="let team of (teams$ | async)" [value]="team">{{team.name}}</ion-option>
     </ion-select>
+    {{team}}
   </ion-item>
   <button ion-button (click)="close()">Apply</button>
 </div>

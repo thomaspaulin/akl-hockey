@@ -12,6 +12,21 @@ export namespace db {
         name:     'Hawks',
         division: 'C',
         logoURL:  'some-other-icon.png'
+    },
+    'lions': {
+      name: 'Lions',
+      division: 'C',
+      logoURL: 'simba.png'
+    },
+    'tigers': {
+      name: 'Tigers',
+      division: 'C',
+      logoURL: 'bengal.png'
+    },
+    'scorpions': {
+      name: 'Scorpions',
+      division: 'C',
+      logoURL: 'scorp-scrop.png'
     }
   };
 
@@ -32,5 +47,17 @@ export namespace db {
       away: 'hawks',
       home: 'bears'
     },
+    {
+      date: new Date(),
+      rink: 'Avondale',
+      away: 'hawks',
+      home: 'tigers'
+    },
+    {
+      date: new Date(),
+      rink: 'Botany',
+      away: 'lions',
+      home: 'scorpions'
+    }
   ];
 }

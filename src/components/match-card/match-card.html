@@ -13,8 +13,8 @@
   <ion-card-content>
     <div class="card-row team-row">
       <div class="team">
-        <img src="{{away.logoURL}}" alt="{{away.name}}" title="{{away.name}}">
-        {{away.name}}
+        <img src="{{away?.logoURL}}" alt="{{away?.name}}" title="{{away?.name}}">
+        {{away?.name}}
       </div>
       <div class="score">
         <b>{{match.awayScore}}</b>
@@ -23,8 +23,8 @@
 
     <div class="card-row team-row">
       <div class="team">
-        <img src="{{home.logoURL}}" alt="{{home.name}}" title="{{home.name}}">
-        {{home.name}}
+        <img src="{{home?.logoURL}}" alt="{{home?.name}}" title="{{home?.name}}">
+        {{home?.name}}
       </div>
       <div class="score">
         <b>{{match.homeScore}}</b>
