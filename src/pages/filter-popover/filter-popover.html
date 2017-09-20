@@ -1,0 +1,10 @@
+<div class="filter-popover" padding>
+  <h3>Filter Schedule</h3>
+  <ion-item>
+    <ion-label>Team</ion-label>
+    <ion-select [(ngModel)]="team" multiple="true">
+      <ion-option *ngFor="let team of (teams$ | async)" [value]="team">{{team.name}}</ion-option>
+    </ion-select>
+  </ion-item>
+  <button ion-button (click)="close()">Apply</button>
+</div>

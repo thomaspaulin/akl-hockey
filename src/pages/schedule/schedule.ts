@@ -1,29 +1,44 @@
-import { Component, OnInit } from '@angular/core';
-import { Match } from '../../model/Match';
-import { MatchService } from '../../app/match.service';
-import { NavController, PopoverController } from 'ionic-angular';
-import { CleanUp } from '../../app/Cleanup';
-import { Filter, filterObject } from '../../model/filter';
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams, PopoverController } from 'ionic-angular';
 import { Team } from '../../model/Team';
+import { Match } from '../../model/Match';
+import { Filter, filterObject } from "../../model/filter";
+import { CleanUp } from '../../app/Cleanup';
 import { TeamsService } from '../../app/teams.service';
+import { MatchService } from '../../app/match.service';
+import { FilterPopoverPage } from '../filter-popover/filter-popover';
 
+/**
+ * Generated class for the SchedulePage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+
+@IonicPage()
 @Component({
-  selector: 'schedule-page',
-  templateUrl: 'schedule.html'
+  selector: 'page-schedule',
+  templateUrl: 'schedule.html',
 })
-export class SchedulePage extends CleanUp implements OnInit {
+export class SchedulePage extends CleanUp {
   matches: Array<Match>;  // todo convert to RxJS
   teams: Array<Team>;
   filters: Filter[] = [];
 
   constructor(public navCtrl: NavController,
+              public navParams: NavParams,
               public popoverCtrl: PopoverController,
               private matchService: MatchService,
               private teamsService: TeamsService) {
     super();
   }
 
-  ngOnInit(): void {
+  openFilterPopover() {
+    const popover = this.popoverCtrl.create(FilterPopoverPage);
+    popover.present();
+  }
+
+  ionViewDidLoad() {
     this.matchService.fetchAll()
       .takeUntil(this.ngUnsubscribe)
       .subscribe(matches => {
@@ -34,9 +49,4 @@ export class SchedulePage extends CleanUp implements OnInit {
       .takeUntil(this.ngUnsubscribe)
       .subscribe(teams => this.teams = teams);
   }
-
-  // openFilterPopover() {
-  //   const popover = this.popoverCtrl.create(MatchFilterPopoverComponent);
-  //   popover.present();
-  // }
 }

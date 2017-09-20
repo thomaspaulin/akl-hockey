@@ -6,29 +6,31 @@ import { MyApp } from './app.component';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { TeamListPage } from '../pages/team-list/team-list';
-import { TeamDetailPage } from '../pages/team-detail/team-detail';
 import { SchedulePage } from '../pages/schedule/schedule';
 import { MatchService } from './match.service';
 import { TeamsService } from './teams.service';
 import { ComponentsModule } from '../components/components.module';
+import { TeamsPage } from '../pages/teams/teams';
+import { TeamDetailPage } from '../pages/team-detail/team-detail';
+import { FilterPopoverPageModule } from '../pages/filter-popover/filter-popover.module';
 
 @NgModule({
   declarations: [
     MyApp,
-    TeamListPage,
+    TeamsPage,
     TeamDetailPage,
-    SchedulePage,
+    SchedulePage
   ],
   imports: [
     BrowserModule,
     ComponentsModule,
+    FilterPopoverPageModule,
     IonicModule.forRoot(MyApp, { mode: 'md' }),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    TeamListPage,
+    TeamsPage,
     TeamDetailPage,
     SchedulePage
   ],

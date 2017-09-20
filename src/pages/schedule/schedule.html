@@ -4,9 +4,14 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Schedule</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="openFilterPopover()">
+        Filter&nbsp;<ion-icon name="arrow-down"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
-<ion-content class="cards-bg">
+<ion-content class="cards-bg" padding>
   <match-card *ngFor="let match of matches" [match]="match" [teams]="teams"></match-card>
 </ion-content>
