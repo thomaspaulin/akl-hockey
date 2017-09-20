@@ -3,6 +3,8 @@
   <ion-item>
     <ion-label>Team</ion-label>
     <ion-select [(ngModel)]="team" multiple="true">
+      <ion-option [value]="null">Show all</ion-option> <!-- todo do this is a better way because it it's yuck in the
+      typescript code as is-->
       <ion-option *ngFor="let team of (teams$ | async)" [value]="team">{{team.name}}</ion-option>
     </ion-select>
     {{team}}
