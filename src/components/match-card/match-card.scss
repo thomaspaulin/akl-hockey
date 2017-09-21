@@ -17,6 +17,11 @@ ion-card-content {
   .team-row {
     margin-bottom: 12px;
     font-size: 20px;
+
+    .team-avatar {
+      margin-right: 14px;
+      border-radius: 50%;
+    }
   }
 
   div.team {
