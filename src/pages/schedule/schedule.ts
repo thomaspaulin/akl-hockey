@@ -8,7 +8,8 @@ import { TeamsService } from '../../app/teams.service';
 import { MatchService } from '../../app/match.service';
 import { FilterPopoverPage } from '../filter-popover/filter-popover';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Subject } from 'rxjs/Subject';
+import { TeamDetailPage } from '../team-detail/team-detail';
+import { MatchDetailPage } from '../match-detail/match-detail';
 
 /**
  * Generated class for the SchedulePage page.
@@ -62,5 +63,12 @@ export class SchedulePage extends CleanUp {
     this.teamsService.fetchAll()
       .takeUntil(this.ngUnsubscribe)
       .subscribe(teams => this.teams = teams);
+  }
+
+  onCardTapped(m: any) {
+    console.log(m);
+    this.navCtrl.push(MatchDetailPage, {
+      match: m
+    });
   }
 }

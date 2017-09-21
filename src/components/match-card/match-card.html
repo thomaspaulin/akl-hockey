@@ -1,4 +1,4 @@
-<ion-card *ngIf="match">
+<ion-card *ngIf="match" (tap)="onCardTapped(match)">
   <ion-card-header>
     <div class="card-row">
       <div class="time">
@@ -13,7 +13,7 @@
   <ion-card-content>
     <div class="card-row team-row">
       <div class="team">
-        <img src="{{away?.logoURL}}" alt="{{away?.name}}" title="{{away?.name}}">
+        <img class="team-avatar" src="{{away?.logoURL}}" alt="{{away?.name}}" title="{{away?.name}}">
         {{away?.name}}
       </div>
       <div class="score">
@@ -23,7 +23,7 @@
 
     <div class="card-row team-row">
       <div class="team">
-        <img src="{{home?.logoURL}}" alt="{{home?.name}}" title="{{home?.name}}">
+        <img class="team-avatar" src="{{home?.logoURL}}" alt="{{home?.name}}" title="{{home?.name}}">
         {{home?.name}}
       </div>
       <div class="score">

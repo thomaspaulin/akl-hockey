@@ -13,12 +13,14 @@ import { ComponentsModule } from '../components/components.module';
 import { TeamsPage } from '../pages/teams/teams';
 import { TeamDetailPage } from '../pages/team-detail/team-detail';
 import { FilterPopoverPageModule } from '../pages/filter-popover/filter-popover.module';
+import { MatchDetailPage } from '../pages/match-detail/match-detail';
 
 @NgModule({
   declarations: [
     MyApp,
     TeamsPage,
     TeamDetailPage,
+    MatchDetailPage,
     SchedulePage
   ],
   imports: [
@@ -32,6 +34,7 @@ import { FilterPopoverPageModule } from '../pages/filter-popover/filter-popover.
     MyApp,
     TeamsPage,
     TeamDetailPage,
+    MatchDetailPage,
     SchedulePage
   ],
   providers: [
