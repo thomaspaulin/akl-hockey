@@ -4,6 +4,8 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
 
+import { SuperTabsController, SuperTabsModule } from 'ionic2-super-tabs';
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { SchedulePage } from '../pages/schedule/schedule';
@@ -14,6 +16,7 @@ import { TeamsPage } from '../pages/teams/teams';
 import { TeamDetailPage } from '../pages/team-detail/team-detail';
 import { FilterPopoverPageModule } from '../pages/filter-popover/filter-popover.module';
 import { MatchDetailPage } from '../pages/match-detail/match-detail';
+import { ScheduleTabPage } from '../pages/schedule-tab/schedule-tab';
 
 @NgModule({
   declarations: [
@@ -21,13 +24,15 @@ import { MatchDetailPage } from '../pages/match-detail/match-detail';
     TeamsPage,
     TeamDetailPage,
     MatchDetailPage,
-    SchedulePage
+    SchedulePage,
+    ScheduleTabPage,
   ],
   imports: [
     BrowserModule,
     ComponentsModule,
     FilterPopoverPageModule,
     IonicModule.forRoot(MyApp, { mode: 'md' }),
+    SuperTabsModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -35,14 +40,16 @@ import { MatchDetailPage } from '../pages/match-detail/match-detail';
     TeamsPage,
     TeamDetailPage,
     MatchDetailPage,
-    SchedulePage
+    SchedulePage,
+    ScheduleTabPage,
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     MatchService,
-    TeamsService
+    TeamsService,
+    SuperTabsController
   ]
 })
 export class AppModule {}

@@ -1,5 +1,5 @@
-<ion-header>
-  <ion-navbar>
+<ion-header no-border no-shadow>
+  <ion-navbar color="primary">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -12,9 +12,27 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content class="cards-bg" padding>
-  <match-card *ngFor="let match of (filteredMatches$ | async)"
-              [match]="match"
-              [teams]="teams"
-              (cardTapped)="onCardTapped($event)"></match-card>
+<!--todo add sliding-->
+<ion-content no-bounce>
+  <super-tabs id="scheduleTabs"
+              selectedTabIndex="1"
+              toolbarColor="light"
+              toolbarBackground="primary"
+              indicatorColor="light"
+              badgeColor="light"
+              [config]="{ sideMenu: 'left' }"
+              (tabSelect)="onTabSelect($event)">
+    <super-tab title="Previous"
+               id="previousTab"
+               [root]="previousTab"
+               [rootParams]="{ week: 'previous' }"></super-tab>
+    <super-tab title="Current Week"
+               id="currentTab"
+               [root]="currentTab"
+               [rootParams]="{ week: 'current' }"></super-tab>
+    <super-tab title="Upcoming"
+               id="upcomingTab"
+               [root]="upcomingTab"
+               [rootParams]="{ week: 'upcoming' }"></super-tab>
+  </super-tabs>
 </ion-content>

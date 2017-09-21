@@ -1,10 +1,15 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Events, Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { SchedulePage } from '../pages/schedule/schedule';
 import { TeamsPage } from '../pages/teams/teams';
+import { TeamsService } from './teams.service';
+import { MatchService } from './match.service';
+import { EventTypes } from '../model/event-types.constants';
+import { Team } from '../model/Team';
+import { Match } from '../model/Match';
 
 @Component({
   templateUrl: 'app.html'
@@ -14,16 +19,30 @@ export class MyApp {
 
   rootPage: any = SchedulePage;
 
-  pages: Array<{title: string, component: any}>;
+  pages: Array<{ title: string, component: any }>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(public platform: Platform,
+              public statusBar: StatusBar,
+              public splashScreen: SplashScreen,
+              private teamsService: TeamsService,
+              private matchService: MatchService,
+              private events: Events) {
     this.initializeApp();
 
     this.pages = [
-      { title: 'Schedule', component: SchedulePage },
-      { title: 'Teams', component: TeamsPage }
+      {title: 'Schedule', component: SchedulePage},
+      {title: 'Teams', component: TeamsPage}
     ];
 
+    this.teamsService.fetchAll()
+      .subscribe((teams: Array<Team>) => {
+        this.events.publish(EventTypes.TEAMS_UPDATED, teams);
+      });
+
+    this.matchService.fetchAll()
+      .subscribe((matches: Array<Match>) => {
+        this.events.publish(EventTypes.MATCHES_UPDATED, matches);
+      });
   }
 
   initializeApp() {

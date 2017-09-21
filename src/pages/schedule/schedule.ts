@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, PopoverController } from 'ionic-angular';
+import { Events, IonicPage, NavController, NavParams, PopoverController } from 'ionic-angular';
 import { Team } from '../../model/Team';
 import { Match } from '../../model/Match';
 import { Filter, filter } from "../../model/filter";
@@ -10,6 +10,9 @@ import { FilterPopoverPage } from '../filter-popover/filter-popover';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { TeamDetailPage } from '../team-detail/team-detail';
 import { MatchDetailPage } from '../match-detail/match-detail';
+import { ScheduleTabPage } from '../schedule-tab/schedule-tab';
+import { Observable } from 'rxjs/Observable';
+import { EventTypes } from '../../model/event-types.constants';
 
 /**
  * Generated class for the SchedulePage page.
@@ -23,20 +26,20 @@ import { MatchDetailPage } from '../match-detail/match-detail';
   selector: 'page-schedule',
   templateUrl: 'schedule.html',
 })
-export class SchedulePage extends CleanUp {
-  matches: Array<Match>;  // todo convert to RxJS
-  filteredMatches$: BehaviorSubject<Array<Match>>;
-  teams: Array<Team>;
-  filters$: BehaviorSubject<Array<Filter>>;
+export class SchedulePage {
+  // Can't type these as pages because they don't have the instance fields provided at compile time
+  // they get generated through the nav
+  previousTab;
+  currentTab;
+  upcomingTab;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public popoverCtrl: PopoverController,
-              private matchService: MatchService,
-              private teamsService: TeamsService) {
-    super();
-    this.filteredMatches$ = new BehaviorSubject([]);
-    this.filters$ = new BehaviorSubject([]);
+              private events: Events) {
+    this.previousTab = ScheduleTabPage;
+    this.currentTab = ScheduleTabPage;
+    this.upcomingTab = ScheduleTabPage;
   }
 
   openFilterPopover() {
@@ -44,25 +47,28 @@ export class SchedulePage extends CleanUp {
     popover.present();
 
     popover.onDidDismiss(response => {
-      this.filters$.next(response);
+      this.events.publish(EventTypes.MATCH_FILTERS, response);
     })
   }
 
   ionViewDidLoad() {
-    this.matchService.fetchAll()
-      .takeUntil(this.ngUnsubscribe)
-      .subscribe(matches => {
-        this.matches = matches.filter((match: Match) => filter.filterMatch(match, this.filters$.value));
-        this.filteredMatches$.next(this.matches);
-      });
+    // this.matchService.fetchAll()
+    //   .subscribe(matches => {
+    //     this.matches = matches.filter((match: Match) => filter.filterMatch(match, this.filters$.value));
+    //     this.filteredMatches$.next(this.matches);
+    //   });
 
-    this.filters$.subscribe((filters: Array<Filter>) => {
-      this.filteredMatches$.next(this.matches.filter((match: Match) => filter.filterMatch(match, filters)));
-    });
+    //todo move this to the tabs pages
+    // this.filters$.subscribe((filters: Array<Filter>) => {
+    //   this.filteredMatches$.next(this.matches.filter((match: Match) => filter.filterMatch(match, filters)));
+    // });
 
-    this.teamsService.fetchAll()
-      .takeUntil(this.ngUnsubscribe)
-      .subscribe(teams => this.teams = teams);
+    // this.teamsService.fetchAll()
+    //   .subscribe(teams => this.teams = teams);
+  }
+
+  onTabSelect(ev: any) {
+    console.log('Tab selected', 'Index: ' + ev.index, 'Unique ID: ' + ev.id);
   }
 
   onCardTapped(m: any) {
