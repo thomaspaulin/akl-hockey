@@ -27,6 +27,14 @@ import { EventTypes } from '../../model/event-types.constants';
   templateUrl: 'schedule.html',
 })
 export class SchedulePage {
+  teams: Array<Team> = [];
+  matches: Array<Match> = [];
+
+  teams$: Observable<Array<Team>>;
+  matches$: Observable<Array<Match>>;
+  filters$: BehaviorSubject<Array<Filter>>;
+  filteredMatches$: BehaviorSubject<Array<Match>>;
+
   // Can't type these as pages because they don't have the instance fields provided at compile time
   // they get generated through the nav
   previousTab;
@@ -36,7 +44,15 @@ export class SchedulePage {
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public popoverCtrl: PopoverController,
-              private events: Events) {
+              private matchService: MatchService,
+              private teamsService: TeamsService) {
+    // start loading the matches and teams when the schedule page loads instead of doing it on each tab
+    this.matches$ = this.matchService.fetchAll();
+    this.teams$ = this.teamsService.fetchAll();
+
+    this.filters$ = new BehaviorSubject([]);
+    this.filteredMatches$ = new BehaviorSubject([]);
+
     this.previousTab = ScheduleTabPage;
     this.currentTab = ScheduleTabPage;
     this.upcomingTab = ScheduleTabPage;
@@ -47,24 +63,8 @@ export class SchedulePage {
     popover.present();
 
     popover.onDidDismiss(response => {
-      this.events.publish(EventTypes.MATCH_FILTERS, response);
+      this.filters$.next(response);
     })
-  }
-
-  ionViewDidLoad() {
-    // this.matchService.fetchAll()
-    //   .subscribe(matches => {
-    //     this.matches = matches.filter((match: Match) => filter.filterMatch(match, this.filters$.value));
-    //     this.filteredMatches$.next(this.matches);
-    //   });
-
-    //todo move this to the tabs pages
-    // this.filters$.subscribe((filters: Array<Filter>) => {
-    //   this.filteredMatches$.next(this.matches.filter((match: Match) => filter.filterMatch(match, filters)));
-    // });
-
-    // this.teamsService.fetchAll()
-    //   .subscribe(teams => this.teams = teams);
   }
 
   onTabSelect(ev: any) {
@@ -72,7 +72,6 @@ export class SchedulePage {
   }
 
   onCardTapped(m: any) {
-    console.log(m);
     this.navCtrl.push(MatchDetailPage, {
       match: m
     });

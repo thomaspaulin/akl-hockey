@@ -5,6 +5,9 @@ import { filter, Filter } from '../../model/filter';
 import { EventTypes } from '../../model/event-types.constants';
 import { Team } from '../../model/Team';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
+
+// TODO add refresh capability
 
 @IonicPage()
 @Component({
@@ -16,28 +19,23 @@ export class ScheduleTabPage {
   matches: Array<Match> = [];
   teams: Array<Team> = [];
 
-  teams$: BehaviorSubject<Array<Team>>;
-  matches$: BehaviorSubject<Array<Match>>;
+  teams$: Observable<Array<Team>>;
+  matches$: Observable<Array<Match>>;
   filters$: BehaviorSubject<Array<Filter>>;
   filteredMatches$: BehaviorSubject<Array<Match>>;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private events: Events) {
-    this.teams$ = new BehaviorSubject([]);
-    this.matches$ = new BehaviorSubject([]);
     this.filters$ = new BehaviorSubject([]);
     this.filteredMatches$ = new BehaviorSubject([]);
 
     if (navParams.data) {
       this.week = navParams.data.week;
+      this.matches$ = navParams.data.matches;
+      this.teams$ = navParams.data.teams;
+      this.filters$ = navParams.data.filters;
     }
-
-    // todo what if the server responses come back before this subscription happens?
-    // will it not be populated?
-    events.subscribe(EventTypes.MATCHES_UPDATED, (matches) => this.matches$.next(matches));
-    events.subscribe(EventTypes.TEAMS_UPDATED, (teams) => this.teams$.next(teams));
-    events.subscribe(EventTypes.MATCH_FILTERS, (filters) => this.filters$.next(filters));
   }
 
   ionViewDidLoad() {
@@ -45,6 +43,7 @@ export class ScheduleTabPage {
       this.matches = matches.filter((match: Match) => filter.filterMatch(match, this.filters$.value));
       this.filteredMatches$.next(this.matches);
     });
+    this.teams$.subscribe(teams => this.teams = teams);
 
     this.filters$.subscribe((filters: Array<Filter>) => {
       this.filteredMatches$.next(this.matches.filter((match: Match) => filter.filterMatch(match, filters)));

@@ -25,14 +25,14 @@
     <super-tab title="Previous"
                id="previousTab"
                [root]="previousTab"
-               [rootParams]="{ week: 'previous' }"></super-tab>
+               [rootParams]="{ week: 'previous', matches: matches$, teams: teams$, filters: filters$ }"></super-tab>
     <super-tab title="Current Week"
                id="currentTab"
                [root]="currentTab"
-               [rootParams]="{ week: 'current' }"></super-tab>
+               [rootParams]="{ week: 'current', matches: matches$, teams: teams$, filters: filters$ }"></super-tab>
     <super-tab title="Upcoming"
                id="upcomingTab"
                [root]="upcomingTab"
-               [rootParams]="{ week: 'upcoming' }"></super-tab>
+               [rootParams]="{ week: 'upcoming', matches: matches$, teams: teams$, filters: filters$ }"></super-tab>
   </super-tabs>
 </ion-content>
