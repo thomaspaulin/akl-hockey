@@ -6,27 +6,27 @@ export namespace db {
     'bears': {
         name:     'Bears',
         division: 'C',
-        logoURL:  'some-icon.png'
+        logoURL:  'http://placekitten.com/g/40/40'
     },
     'hawks': {
         name:     'Hawks',
         division: 'C',
-        logoURL:  'some-other-icon.png'
+        logoURL:  'http://placekitten.com/g/40/40'
     },
     'lions': {
       name: 'Lions',
       division: 'C',
-      logoURL: 'simba.png'
+      logoURL: 'http://placekitten.com/g/40/40'
     },
     'tigers': {
       name: 'Tigers',
       division: 'C',
-      logoURL: 'bengal.png'
+      logoURL: 'http://placekitten.com/g/40/40'
     },
     'scorpions': {
       name: 'Scorpions',
       division: 'C',
-      logoURL: 'scorp-scrop.png'
+      logoURL: 'http://placekitten.com/g/40/40'
     }
   };
 
