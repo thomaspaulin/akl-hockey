@@ -14,6 +14,8 @@ import { TeamsPage } from '../pages/teams/teams';
 import { TeamDetailPage } from '../pages/team-detail/team-detail';
 import { FilterPopoverPageModule } from '../pages/filter-popover/filter-popover.module';
 import { MatchDetailPage } from '../pages/match-detail/match-detail';
+import {HttpModule} from "@angular/http";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -27,6 +29,7 @@ import { MatchDetailPage } from '../pages/match-detail/match-detail';
     BrowserModule,
     ComponentsModule,
     FilterPopoverPageModule,
+    HttpClientModule,
     IonicModule.forRoot(MyApp, { mode: 'md' }),
   ],
   bootstrap: [IonicApp],
