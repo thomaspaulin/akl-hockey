@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, PopoverController } from 'ionic-an
 import { Team } from '../../model/Team';
 import { Match } from '../../model/Match';
 import { Filter, filter } from "../../model/filter";
-import { CleanUp } from '../../app/Cleanup';
+import { CleanUpOnViewWillUnload } from '../../app/CleanupOnVIewWillUnload';
 import { TeamsService } from '../../app/teams.service';
 import { MatchService } from '../../app/match.service';
 import { FilterPopoverPage } from '../filter-popover/filter-popover';
@@ -23,7 +23,7 @@ import { MatchDetailPage } from '../match-detail/match-detail';
   selector: 'page-schedule',
   templateUrl: 'schedule.html',
 })
-export class SchedulePage extends CleanUp {
+export class SchedulePage extends CleanUpOnViewWillUnload {
   matches: Array<Match>;  // todo convert to RxJS
   filteredMatches$: BehaviorSubject<Array<Match>>;
   teams: Array<Team>;
