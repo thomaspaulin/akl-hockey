@@ -1,6 +1,6 @@
 export namespace v0 {
   export interface Division {
-    ID: string;
+    ID: number;
     CreatedAt: Date;
     UpdatedAt: Date;
     DeletedAt: Date;
@@ -8,7 +8,7 @@ export namespace v0 {
   }
 
   export interface Rink {
-    ID: string;
+    ID: number;
     CreatedAt: Date;
     UpdatedAt: Date;
     DeletedAt: Date;
@@ -16,12 +16,28 @@ export namespace v0 {
   }
 
   export interface Team {
-    ID: string;
+    ID: number;
     CreatedAt: Date;
     UpdatedAt: Date;
     DeletedAt: Date;
     name: string;
-    divisionID: number;
+    division: Division;
     logoURL: string;
+  }
+
+  export interface Match {
+    ID: number;
+    CreatedAt: Date;
+    UpdatedAt: Date;
+    DeletedAt: Date;
+    start: Date;
+    season: number;
+    status: string;
+    division: Division;
+    away: Team;
+    home: Team;
+    awayScore: number;
+    homeScore: number;
+    rink: Rink;
   }
 }
