@@ -4,6 +4,7 @@ import {Observable} from "rxjs/Observable";
 import {V0_URL} from "../../app/app.constants";
 import {v0} from "../../model/api/v0.models";
 import {Division} from "../../model/Division";
+import {db} from "../../model/dummy-data";
 
 @Injectable()
 export class DivisionsProvider {
@@ -13,22 +14,30 @@ export class DivisionsProvider {
   }
 
   fetchAll(): Observable<Division[]> {
-    return this.http.get(this.divisionURL)
-      .map((resp: v0.Division[]) => divisionsFromServerModel(resp))
+    return Observable.of(db.divisions);
+    // return this.http.get(this.divisionURL)
+    //   .map((resp: v0.Division[]) => divisionsFromServerModel(resp));
   }
 
   fetch(divID: number): Observable<Division> {
-    return this.http.get(`${this.divisionURL}/${divID}`)
-      .map((resp: v0.Division) => fromServerModel(resp))
+    return Observable.of(db.divisions.find(d => d.ID === divID));
+    // return this.http.get(`${this.divisionURL}/${divID}`)
+    //   .map((resp: v0.Division) => divisionFromServerModel(resp));
   }
 }
 
-function divisionsFromServerModel(divisions: v0.Division[]): Division[] {
-  return divisions.map((div: v0.Division) => fromServerModel(div));
+export function divisionsFromServerModel(divisions: v0.Division[]): Division[] {
+  return divisions.map((div: v0.Division) => divisionFromServerModel(div));
 }
 
-function fromServerModel(div: v0.Division): Division {
+export function divisionFromServerModel(div: v0.Division): Division {
+  if (!div) {
+    return <Division>{
+      name: 'Unknown'
+    };
+  }
   return <Division>{
+    ID: div.ID,
     name: div.name
   };
 }

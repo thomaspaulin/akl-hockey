@@ -3,7 +3,7 @@ import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {Team} from '../../model/Team';
 import {TeamDetailPage} from '../team-detail/team-detail';
 import {TeamsProvider} from "../../providers/team/team";
-import {CleanUpOnViewWillUnload} from "../../app/CleanupOnVIewWillUnload";
+import {CleanUpOnViewWillUnload} from "../../app/CleanupOnViewWillUnload";
 
 /**
  * Generated class for the TeamsPage page.
@@ -29,7 +29,9 @@ export class TeamsPage extends CleanUpOnViewWillUnload {
   ionViewDidLoad() {
     this.teamsProvider.fetchAll()
       .takeUntil(this.ngUnsubscribe)
-      .subscribe((teams: Team[]) => this.teams = teams);
+      .subscribe((teams: Team[]) => {
+        this.teams = teams;
+      });
   }
 
   itemTapped(event, team) {

@@ -1,15 +1,15 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, PopoverController } from 'ionic-angular';
-import { Team } from '../../model/Team';
-import { Match } from '../../model/Match';
-import { Filter, filter } from "../../model/filter";
-import { CleanUpOnViewWillUnload } from '../../app/CleanupOnVIewWillUnload';
-import { TeamsService } from '../../app/teams.service';
-import { MatchService } from '../../app/match.service';
-import { FilterPopoverPage } from '../filter-popover/filter-popover';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { TeamDetailPage } from '../team-detail/team-detail';
-import { MatchDetailPage } from '../match-detail/match-detail';
+import {Component} from '@angular/core';
+import {IonicPage, NavController, NavParams, PopoverController} from 'ionic-angular';
+import {Team} from '../../model/Team';
+import {Match} from '../../model/Match';
+import {Filter, filter} from "../../model/filter";
+import {CleanUpOnViewWillUnload} from '../../app/CleanupOnViewWillUnload';
+import {FilterPopoverPage} from '../filter-popover/filter-popover';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {MatchDetailPage} from '../match-detail/match-detail';
+import {TeamsProvider} from "../../providers/team/team";
+import {Observable} from "rxjs/Observable";
+import {MatchesProvider} from "../../providers/match/match";
 
 /**
  * Generated class for the SchedulePage page.
@@ -24,7 +24,8 @@ import { MatchDetailPage } from '../match-detail/match-detail';
   templateUrl: 'schedule.html',
 })
 export class SchedulePage extends CleanUpOnViewWillUnload {
-  matches: Array<Match>;  // todo convert to RxJS
+  matches: Array<Match> = [];  // todo convert to RxJS
+  matches$: Observable<Match[]>;  // todo convert to RxJS
   filteredMatches$: BehaviorSubject<Array<Match>>;
   teams: Array<Team>;
   filters$: BehaviorSubject<Array<Filter>>;
@@ -32,8 +33,8 @@ export class SchedulePage extends CleanUpOnViewWillUnload {
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public popoverCtrl: PopoverController,
-              private matchService: MatchService,
-              private teamsService: TeamsService) {
+              private matchService: MatchesProvider,
+              private teamsProvider: TeamsProvider) {
     super();
     this.filteredMatches$ = new BehaviorSubject([]);
     this.filters$ = new BehaviorSubject([]);
@@ -49,9 +50,12 @@ export class SchedulePage extends CleanUpOnViewWillUnload {
   }
 
   ionViewDidLoad() {
-    this.matchService.fetchAll()
-      .takeUntil(this.ngUnsubscribe)
-      .subscribe(matches => {
+    this.matches$ = this.matchService.fetchAll()
+      .takeUntil(this.ngUnsubscribe);
+
+    //todo combine matches and filters observables
+
+    this.matches$.subscribe(matches => {
         this.matches = matches.filter((match: Match) => filter.filterMatch(match, this.filters$.value));
         this.filteredMatches$.next(this.matches);
       });
@@ -60,7 +64,7 @@ export class SchedulePage extends CleanUpOnViewWillUnload {
       this.filteredMatches$.next(this.matches.filter((match: Match) => filter.filterMatch(match, filters)));
     });
 
-    this.teamsService.fetchAll()
+    this.teamsProvider.fetchAll()
       .takeUntil(this.ngUnsubscribe)
       .subscribe(teams => this.teams = teams);
   }

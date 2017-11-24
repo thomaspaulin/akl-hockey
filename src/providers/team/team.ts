@@ -1,38 +1,49 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {Observable} from "rxjs/Observable";
 import {V0_URL} from "../../app/app.constants";
 import {v0} from "../../model/api/v0.models";
 import {Team} from "../../model/Team";
-import {Division} from "../../model/Division";
+import {divisionFromServerModel} from "../division/division";
+import {Observable} from "rxjs/Observable";
+import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/of';
+import {db} from "../../model/dummy-data";
 
 @Injectable()
 export class TeamsProvider {
+  // todo cache
   private readonly teamURL = `${V0_URL}/teams`;
 
   constructor(public http: HttpClient) {
   }
 
   fetchAll(): Observable<Team[]> {
-    return this.http.get(this.teamURL)
-      .map((resp: v0.Team[]) => teamsFromServerModel(resp))
+    return Observable.of(db.teams);
+    // return this.http.get(this.teamURL)
+    //   .map((serverTeams: v0.Team[]) => teamsFromServerModel(serverTeams));
   }
 
-  fetch(divID: number): Observable<Team> {
-    return this.http.get(`${this.teamURL}/${divID}`)
-      .map((resp: v0.Team) => fromServerModel(resp))
+  fetch(teamID: number): Observable<Team> {
+    return Observable.of(db.teams.find(team => team.ID === teamID));
+    // return this.http.get(`${this.teamURL}/${divID}`)
+    //   .map((serverTeam: v0.Team) => teamFromServerModel(serverTeam));
   }
 }
 
-function teamsFromServerModel(teams: v0.Team[]): Team[] {
-  return teams.map((div: v0.Team) => fromServerModel(div));
+export function teamsFromServerModel(teams: v0.Team[]): Team[] {
+  return teams.map(team => teamFromServerModel(team));
 }
 
-function fromServerModel(team: v0.Team): Team {
-  let div = <Division>{name: "Temp"}; //todo make the request then use some kind of store or similar to cache
+export function teamFromServerModel(team: v0.Team): Team {
+  if (!team) {
+    return <Team>{
+      name: 'Unknown'
+    };
+  }
   return <Team>{
+    ID: team.ID,
     name: team.name,
-    division: div,
+    division: divisionFromServerModel(team.division),
     logoURL: team.logoURL,
   };
 }

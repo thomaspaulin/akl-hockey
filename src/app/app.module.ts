@@ -7,7 +7,6 @@ import {MyApp} from './app.component';
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {SchedulePage} from '../pages/schedule/schedule';
-import {MatchService} from './match.service';
 import {ComponentsModule} from '../components/components.module';
 import {TeamsPage} from '../pages/teams/teams';
 import {TeamDetailPage} from '../pages/team-detail/team-detail';
@@ -17,6 +16,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {RinksProvider} from '../providers/rink/rink';
 import {DivisionsProvider} from '../providers/division/division';
 import {TeamsProvider} from '../providers/team/team';
+import {MatchesProvider} from '../providers/match/match';
 
 @NgModule({
   declarations: [
@@ -45,10 +45,10 @@ import {TeamsProvider} from '../providers/team/team';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    MatchService,
     RinksProvider,
     DivisionsProvider,
-    TeamsProvider
+    TeamsProvider,
+    MatchesProvider
   ]
 })
 export class AppModule {}
