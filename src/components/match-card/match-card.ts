@@ -1,8 +1,7 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Team} from '../../model/Team';
 import {Match} from '../../model/Match';
-import {Division} from "../../model/Division";
-import {DEFAULT_AVATAR_URL} from "../../app/app.constants";
+import {UNKNOWN_TEAM} from "../../app/app.constants";
 
 @Component({
   selector:        'match-card',
@@ -21,9 +20,8 @@ export class MatchCardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let unknown = <Team>{name: 'Unknown', division: <Division>{name: 'Unknown'}, logoURL: DEFAULT_AVATAR_URL};
-    this.away = unknown;
-    this.home = unknown;
+    this.away = UNKNOWN_TEAM;
+    this.home = UNKNOWN_TEAM;
     if (this.teams) {
       let retrievedAway = this.teams.find(team => this.away.name.toLowerCase() === team.name.toLowerCase());
       let retrievedHome = this.teams.find(team => this.home.name.toLowerCase() === team.name.toLowerCase());
