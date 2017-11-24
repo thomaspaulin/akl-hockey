@@ -4,7 +4,6 @@ import {Observable} from "rxjs/Observable";
 import {V0_URL} from "../../app/app.constants";
 import {v0} from "../../model/api/v0.models";
 import {Division} from "../../model/Division";
-import {db} from "../../model/dummy-data";
 
 @Injectable()
 export class DivisionsProvider {
@@ -14,15 +13,13 @@ export class DivisionsProvider {
   }
 
   fetchAll(): Observable<Division[]> {
-    return Observable.of(db.divisions);
-    // return this.http.get(this.divisionURL)
-    //   .map((resp: v0.Division[]) => divisionsFromServerModel(resp));
+    return this.http.get(this.divisionURL)
+      .map((resp: v0.Division[]) => divisionsFromServerModel(resp));
   }
 
   fetch(divID: number): Observable<Division> {
-    return Observable.of(db.divisions.find(d => d.ID === divID));
-    // return this.http.get(`${this.divisionURL}/${divID}`)
-    //   .map((resp: v0.Division) => divisionFromServerModel(resp));
+    return this.http.get(`${this.divisionURL}/${divID}`)
+      .map((resp: v0.Division) => divisionFromServerModel(resp));
   }
 }
 

@@ -6,14 +6,7 @@ import {Observable} from "rxjs/Observable";
 import {v0} from "../../model/api/v0.models";
 import {teamFromServerModel} from "../team/team";
 import {rinkFromServerModel} from "../rink/rink";
-import {db} from "../../model/dummy-data";
 
-/*
-  Generated class for the MatchesProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class MatchesProvider {
   private matchesURL = `${V0_URL}/matches`;
@@ -22,9 +15,8 @@ export class MatchesProvider {
   }
 
   fetchAll(): Observable<Match[]> {
-    return Observable.of(db.matches);
-    // return this.http.get(this.matchesURL)
-    //   .map((serverMatches: v0.Match[]) => matchesFromServerModel(serverMatches));
+    return this.http.get(this.matchesURL)
+      .map((serverMatches: v0.Match[]) => matchesFromServerModel(serverMatches));
   }
 }
 

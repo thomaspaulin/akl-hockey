@@ -7,7 +7,6 @@ import {divisionFromServerModel} from "../division/division";
 import {Observable} from "rxjs/Observable";
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
-import {db} from "../../model/dummy-data";
 
 @Injectable()
 export class TeamsProvider {
@@ -18,15 +17,13 @@ export class TeamsProvider {
   }
 
   fetchAll(): Observable<Team[]> {
-    return Observable.of(db.teams);
-    // return this.http.get(this.teamURL)
-    //   .map((serverTeams: v0.Team[]) => teamsFromServerModel(serverTeams));
+    return this.http.get(this.teamURL)
+      .map((serverTeams: v0.Team[]) => teamsFromServerModel(serverTeams));
   }
 
   fetch(teamID: number): Observable<Team> {
-    return Observable.of(db.teams.find(team => team.ID === teamID));
-    // return this.http.get(`${this.teamURL}/${divID}`)
-    //   .map((serverTeam: v0.Team) => teamFromServerModel(serverTeam));
+    return this.http.get(`${this.teamURL}/${teamID}`)
+      .map((serverTeam: v0.Team) => teamFromServerModel(serverTeam));
   }
 }
 

@@ -4,7 +4,6 @@ import {Observable} from "rxjs/Observable";
 import {V0_URL} from "../../app/app.constants";
 import {v0} from "../../model/api/v0.models";
 import {Rink} from "../../model/Rink";
-import {db} from "../../model/dummy-data";
 
 @Injectable()
 export class RinksProvider {
@@ -14,15 +13,13 @@ export class RinksProvider {
   }
 
   fetchAll(): Observable<Rink[]> {
-    return Observable.of(db.rinks);
-    // return this.http.get(this.rinkURL)
-    //   .map((resp: v0.Rink[]) => rinksFromServerModel(resp))
+    return this.http.get(this.rinkURL)
+      .map((resp: v0.Rink[]) => rinksFromServerModel(resp))
   }
 
   fetch(rinkID: number): Observable<Rink> {
-    return Observable.of(db.rinks.find(r => r.ID === rinkID));
-    // return this.http.get(`${this.rinkURL}/${divID}`)
-    //   .map((resp: v0.Rink) => rinkFromServerModel(resp))
+    return this.http.get(`${this.rinkURL}/${rinkID}`)
+      .map((resp: v0.Rink) => rinkFromServerModel(resp))
   }
 }
 
