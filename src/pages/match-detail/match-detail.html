@@ -6,12 +6,12 @@
 -->
 <ion-header>
   <ion-navbar>
-    <ion-title>{{match.date | date:'EEEE d MMMM'}} - {{match.away}} vs. {{match.home}}</ion-title>
+    <ion-title>{{match.date | date:'EEEE d MMMM'}} - {{match.away.name}} vs. {{match.home.name}}</ion-title>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
-  <h3>{{match.away}}</h3>
-  <h3>{{match.home}}</h3>
+  <h3>{{match.away.name}}</h3>
+  <h3>{{match.home.name}}</h3>
 </ion-content>
