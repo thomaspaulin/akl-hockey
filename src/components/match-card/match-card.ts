@@ -1,6 +1,8 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Team } from '../../model/Team';
-import { Match } from '../../model/Match';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Team} from '../../model/Team';
+import {Match} from '../../model/Match';
+import {Division} from "../../model/Division";
+import {DEFAULT_AVATAR_URL} from "../../app/app.constants";
 
 @Component({
   selector:        'match-card',
@@ -19,8 +21,19 @@ export class MatchCardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.away = this.teams.find(team => this.match.away.toLowerCase() === team.name.toLowerCase());
-    this.home = this.teams.find(team => this.match.home.toLowerCase() === team.name.toLowerCase());
+    let unknown = <Team>{name: 'Unknown', division: <Division>{name: 'Unknown'}, logoURL: DEFAULT_AVATAR_URL};
+    this.away = unknown;
+    this.home = unknown;
+    if (this.teams) {
+      let retrievedAway = this.teams.find(team => this.away.name.toLowerCase() === team.name.toLowerCase());
+      let retrievedHome = this.teams.find(team => this.home.name.toLowerCase() === team.name.toLowerCase());
+      if (retrievedAway) {
+        this.away = retrievedAway;
+      }
+      if (retrievedHome) {
+        this.home = retrievedHome;
+      }
+    }
   }
 
   onCardTapped(m: Match) {
