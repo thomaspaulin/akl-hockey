@@ -47,25 +47,25 @@ export namespace db {
   export const rinks: Array<Rink> = Object.keys(_rinks).map(key => _rinks[key]);
   export const divisions: Array<Rink> = Object.keys(_divisions).map(key => _divisions[key]);
   export const matches: Array<Match> = [
-    {
+    <Match>{
       ID: 1,
-      date: new Date(),
+      date: new Date(2017, 3, 24, 4, 30, 0, 0),
       rink: _rinks['botany'],
       away: _teams['bears'],
       awayScore: 5,
       home: _teams['hawks'],
       homeScore: 2
     },
-    {
+    <Match>{
       ID: 2,
       date: new Date(),
       rink: _rinks['avondale'],
       away: _teams['hawks'],
       home: _teams['bears']
     },
-    {
+    <Match>{
       ID: 3,
-      date: new Date(),
+      date: new Date(2017, 5, 15, 6, 30, 0, 0),
       rink: _rinks['avondale'],
       away: _teams['hawks'],
       home: _teams['tigers']

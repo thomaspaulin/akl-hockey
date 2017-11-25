@@ -16,7 +16,8 @@ export class MatchesProvider {
 
   fetchAll(): Observable<Match[]> {
     return this.http.get(this.matchesURL)
-      .map((serverMatches: v0.Match[]) => matchesFromServerModel(serverMatches));
+      .map((serverMatches: v0.Match[]) => matchesFromServerModel(serverMatches))
+      .map((matches: Match[]) => matches.sort((a, b) => a.date.getTime() - b.date.getTime()));
   }
 }
 
