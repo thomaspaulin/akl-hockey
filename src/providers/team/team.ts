@@ -3,7 +3,6 @@ import {Injectable} from '@angular/core';
 import {V0_URL} from "../../app/app.constants";
 import {v0} from "../../model/api/v0.models";
 import {Team} from "../../model/Team";
-import {divisionFromServerModel} from "../division/division";
 import {Observable} from "rxjs/Observable";
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
@@ -40,7 +39,7 @@ export function teamFromServerModel(team: v0.Team): Team {
   return <Team>{
     ID: team.ID,
     name: team.name,
-    division: divisionFromServerModel(team.division),
+    divisionName: team.divisionName,
     logoURL: team.logoURL,
   };
 }

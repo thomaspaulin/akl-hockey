@@ -4,12 +4,6 @@ import {Rink} from "./Rink";
 import {Division} from "./Division";
 
 export namespace db {
-  const _divisions: { [key: string]: Division } = {
-    'c': {ID: 1, name: 'C'},
-    'b': {ID: 2, name: 'B'},
-    'a': {ID: 3, name: 'A'},
-  };
-
   const _rinks: { [key: string]: Rink } = {
     'avondale': {ID: 1, name: 'Avondale'},
     'botany': {ID: 1, name: 'Botany'},
@@ -17,30 +11,36 @@ export namespace db {
 
   const _teams: { [key: string]: Team } = {
     'bears': {
-        name:     'Bears',
-      division: _divisions['c'],
-        logoURL:  'http://placekitten.com/g/40/40'
+      name: 'Bears',
+      divisionName: 'C',
+      logoURL: 'http://placekitten.com/g/40/40'
     },
     'hawks': {
-        name:     'Hawks',
-      division: _divisions['c'],
-        logoURL:  'http://placekitten.com/g/40/40'
+      name: 'Hawks',
+      divisionName: 'C',
+      logoURL: 'http://placekitten.com/g/40/40'
     },
     'lions': {
       name: 'Lions',
-      division: _divisions['c'],
+      divisionName: 'C',
       logoURL: 'http://placekitten.com/g/40/40'
     },
     'tigers': {
       name: 'Tigers',
-      division: _divisions['c'],
+      divisionName: 'C',
       logoURL: 'http://placekitten.com/g/40/40'
     },
-    'scorpions': {
-      name: 'Scorpions',
-      division: _divisions['c'],
+    'grizzlies': {
+      name: 'Grizzlies',
+      divisionName: 'B',
       logoURL: 'http://placekitten.com/g/40/40'
     }
+  };
+
+  const _divisions: { [key: string]: Division } = {
+    'c': {ID: 1, name: 'C', teams: [_teams['bears'], _teams['hawks'], _teams['tigers'], _teams['lions']]},
+    'b': {ID: 2, name: 'B', teams: [_teams['grizzlies']]},
+    'a': {ID: 3, name: 'A', teams: []},
   };
 
   export const teams: Array<Team> = Object.keys(_teams).map(key => _teams[key]);
@@ -69,13 +69,6 @@ export namespace db {
       rink: _rinks['avondale'],
       away: _teams['hawks'],
       home: _teams['tigers']
-    },
-    {
-      ID: 4,
-      date: new Date(),
-      rink: _rinks['botany'],
-      away: _teams['lions'],
-      home: _teams['scorpions']
     }
   ];
 }

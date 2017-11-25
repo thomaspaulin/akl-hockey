@@ -3,15 +3,14 @@ export namespace v0 {
     ID: number;
     CreatedAt: Date;
     UpdatedAt: Date;
-    DeletedAt: Date;
     name: string;
+    teams: Team[];
   }
 
   export interface Rink {
     ID: number;
     CreatedAt: Date;
     UpdatedAt: Date;
-    DeletedAt: Date;
     name: string;
   }
 
@@ -19,9 +18,8 @@ export namespace v0 {
     ID: number;
     CreatedAt: Date;
     UpdatedAt: Date;
-    DeletedAt: Date;
     name: string;
-    division: Division;
+    divisionName: string;
     logoURL: string;
   }
 
@@ -29,7 +27,6 @@ export namespace v0 {
     ID: number;
     CreatedAt: Date;
     UpdatedAt: Date;
-    DeletedAt: Date;
     start: Date;
     season: number;
     status: string;
