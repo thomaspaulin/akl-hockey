@@ -3,7 +3,7 @@ import {IonicPage, NavParams, ViewController} from 'ionic-angular';
 import {Observable} from 'rxjs/Observable';
 import {Team} from '../../model/Team';
 import {Filter} from '../../model/filter';
-import {TeamsProvider} from "../../providers/team/team";
+import {TeamsProvider} from "../../providers/team/team.provider";
 
 // todo convert to a component not a page. Make sure it's also an entrycomponent in app.module.ts when that's done
 // because I think that was the main reason it didn't work last try

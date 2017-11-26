@@ -13,10 +13,10 @@ import {TeamDetailPage} from '../pages/team-detail/team-detail';
 import {FilterPopoverPageModule} from '../pages/filter-popover/filter-popover.module';
 import {MatchDetailPage} from '../pages/match-detail/match-detail';
 import {HttpClientModule} from "@angular/common/http";
-import {RinksProvider} from '../providers/rink/rink';
-import {DivisionsProvider} from '../providers/division/division';
-import {TeamsProvider} from '../providers/team/team';
-import {MatchesProvider} from '../providers/match/match';
+import {RinksProvider} from '../providers/rink/rink.provider';
+import {DivisionsProvider} from '../providers/division/division.provider';
+import {TeamsProvider} from '../providers/team/team.provider';
+import {MatchesProvider} from '../providers/match/match.provider';
 
 @NgModule({
   declarations: [

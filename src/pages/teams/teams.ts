@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {Team} from '../../model/Team';
 import {TeamDetailPage} from '../team-detail/team-detail';
-import {TeamsProvider} from "../../providers/team/team";
+import {TeamsProvider} from "../../providers/team/team.provider";
 import {CleanUpOnViewWillUnload} from "../../app/CleanupOnViewWillUnload";
 
 /**

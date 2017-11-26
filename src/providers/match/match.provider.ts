@@ -4,8 +4,8 @@ import {V0_URL} from "../../app/app.constants";
 import {Match} from "../../model/Match";
 import {Observable} from "rxjs/Observable";
 import {v0} from "../../model/api/v0.models";
-import {teamFromServerModel} from "../team/team";
-import {rinkFromServerModel} from "../rink/rink";
+import {teamFromServerModel} from "../team/team.provider";
+import {rinkFromServerModel} from "../rink/rink.provider";
 
 @Injectable()
 export class MatchesProvider {

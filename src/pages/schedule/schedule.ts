@@ -7,9 +7,9 @@ import {CleanUpOnViewWillUnload} from '../../app/CleanupOnViewWillUnload';
 import {FilterPopoverPage} from '../filter-popover/filter-popover';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {MatchDetailPage} from '../match-detail/match-detail';
-import {TeamsProvider} from "../../providers/team/team";
+import {TeamsProvider} from "../../providers/team/team.provider";
 import {Observable} from "rxjs/Observable";
-import {MatchesProvider} from "../../providers/match/match";
+import {MatchesProvider} from "../../providers/match/match.provider";
 
 /**
  * Generated class for the SchedulePage page.
