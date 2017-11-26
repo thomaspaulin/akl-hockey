@@ -17,7 +17,15 @@ export class TeamsProvider {
 
   fetchAll(): Observable<Team[]> {
     return this.http.get(this.teamURL)
-      .map((serverTeams: v0.Team[]) => teamsFromServerModel(serverTeams));
+      .map((serverTeams: v0.Team[]) => teamsFromServerModel(serverTeams))
+      .map((teams: Team[]) => teams.sort((a, b) => {
+        const c = a.divisionName.localeCompare(b.divisionName);
+        if (c === 0) {
+          return a.name.localeCompare(b.name);
+        } else {
+          return c;
+        }
+      }));
   }
 
   fetch(teamID: number): Observable<Team> {
