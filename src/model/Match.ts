@@ -5,6 +5,7 @@ export class Match {
   ID?: number;
   date: Date;
   rink: Rink;
+  divisionName: string;
   away: Team;
   home: Team;
   awayScore?: number;

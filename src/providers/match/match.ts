@@ -17,7 +17,9 @@ export class MatchesProvider {
   fetchAll(): Observable<Match[]> {
     return this.http.get(this.matchesURL)
       .map((serverMatches: v0.Match[]) => matchesFromServerModel(serverMatches))
-      .map((matches: Match[]) => matches.sort((a, b) => a.date.getTime() - b.date.getTime()));
+      .map((matches: Match[]) => matches.sort((a, b) => {
+        return a.date.getTime() - b.date.getTime()
+      }));
   }
 }
 
@@ -31,7 +33,8 @@ export function matchFromServerModel(m: v0.Match): Match {
   }
   return <Match>{
     ID: m.ID,
-    date: m.start,
+    date: new Date(m.start),
+    divisionName: m.divisionName,
     away: teamFromServerModel(m.away),
     home: teamFromServerModel(m.home),
     awayScore: m.awayScore,

@@ -27,10 +27,10 @@ export namespace v0 {
     ID: number;
     CreatedAt: Date;
     UpdatedAt: Date;
-    start: Date;
+    start: string;  // date string in the format "2017-03-18T05:00:00Z"
     season: number;
     status: string;
-    division: Division;
+    divisionName: string;
     away: Team;
     home: Team;
     awayScore: number;

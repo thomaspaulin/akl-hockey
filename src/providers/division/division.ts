@@ -1,7 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from "rxjs/Observable";
-import {V0_URL} from "../../app/app.constants";
+import {UNKNOWN_DIVISION, V0_URL} from "../../app/app.constants";
 import {v0} from "../../model/api/v0.models";
 import {Division} from "../../model/Division";
 
@@ -29,12 +29,11 @@ export function divisionsFromServerModel(divisions: v0.Division[]): Division[] {
 
 export function divisionFromServerModel(div: v0.Division): Division {
   if (!div) {
-    return <Division>{
-      name: 'Unknown'
-    };
+    return UNKNOWN_DIVISION;
   }
   return <Division>{
     ID: div.ID,
-    name: div.name
+    name: div.name,
+    teams: div.teams
   };
 }
