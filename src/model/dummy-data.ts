@@ -1,63 +1,74 @@
-import { Team } from './Team';
-import { Match } from './Match';
+import {Team} from './Team';
+import {Match} from './Match';
+import {Rink} from "./Rink";
+import {Division} from "./Division";
 
 export namespace db {
-  const _teams = {
+  const _rinks: { [key: string]: Rink } = {
+    'avondale': {ID: 1, name: 'Avondale'},
+    'botany': {ID: 1, name: 'Botany'},
+  };
+
+  const _teams: { [key: string]: Team } = {
     'bears': {
-        name:     'Bears',
-        division: 'C',
-        logoURL:  'http://placekitten.com/g/40/40'
+      name: 'Bears',
+      divisionName: 'C',
+      logoURL: 'http://placekitten.com/g/40/40'
     },
     'hawks': {
-        name:     'Hawks',
-        division: 'C',
-        logoURL:  'http://placekitten.com/g/40/40'
+      name: 'Hawks',
+      divisionName: 'C',
+      logoURL: 'http://placekitten.com/g/40/40'
     },
     'lions': {
       name: 'Lions',
-      division: 'C',
+      divisionName: 'C',
       logoURL: 'http://placekitten.com/g/40/40'
     },
     'tigers': {
       name: 'Tigers',
-      division: 'C',
+      divisionName: 'C',
       logoURL: 'http://placekitten.com/g/40/40'
     },
-    'scorpions': {
-      name: 'Scorpions',
-      division: 'C',
+    'grizzlies': {
+      name: 'Grizzlies',
+      divisionName: 'B',
       logoURL: 'http://placekitten.com/g/40/40'
     }
   };
 
-  export const teams: Array<Team> = Object.keys(_teams).map(key => _teams[key]);
+  const _divisions: { [key: string]: Division } = {
+    'c': {ID: 1, name: 'C', teams: [_teams['bears'], _teams['hawks'], _teams['tigers'], _teams['lions']]},
+    'b': {ID: 2, name: 'B', teams: [_teams['grizzlies']]},
+    'a': {ID: 3, name: 'A', teams: []},
+  };
 
+  export const teams: Array<Team> = Object.keys(_teams).map(key => _teams[key]);
+  export const rinks: Array<Rink> = Object.keys(_rinks).map(key => _rinks[key]);
+  export const divisions: Array<Rink> = Object.keys(_divisions).map(key => _divisions[key]);
   export const matches: Array<Match> = [
-    {
-      date: new Date(),
-      rink: 'Botany',
-      away: 'bears',
+    <Match>{
+      ID: 1,
+      date: new Date(2017, 3, 24, 4, 30, 0, 0),
+      rink: _rinks['botany'],
+      away: _teams['bears'],
       awayScore: 5,
-      home: 'hawks',
+      home: _teams['hawks'],
       homeScore: 2
     },
-    {
+    <Match>{
+      ID: 2,
       date: new Date(),
-      rink: 'Avondale',
-      away: 'hawks',
-      home: 'bears'
+      rink: _rinks['avondale'],
+      away: _teams['hawks'],
+      home: _teams['bears']
     },
-    {
-      date: new Date(),
-      rink: 'Avondale',
-      away: 'hawks',
-      home: 'tigers'
-    },
-    {
-      date: new Date(),
-      rink: 'Botany',
-      away: 'lions',
-      home: 'scorpions'
+    <Match>{
+      ID: 3,
+      date: new Date(2017, 5, 15, 6, 30, 0, 0),
+      rink: _rinks['avondale'],
+      away: _teams['hawks'],
+      home: _teams['tigers']
     }
   ];
 }

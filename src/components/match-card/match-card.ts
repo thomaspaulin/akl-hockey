@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Team } from '../../model/Team';
-import { Match } from '../../model/Match';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Team} from '../../model/Team';
+import {Match} from '../../model/Match';
 
 @Component({
   selector:        'match-card',
@@ -12,15 +12,10 @@ export class MatchCardComponent implements OnInit {
   @Input() teams: Array<Team>;
   @Output() cardTapped = new EventEmitter<Match>();
 
-  away: Team;
-  home: Team;
-
   constructor() {
   }
 
   ngOnInit(): void {
-    this.away = this.teams.find(team => this.match.away.toLowerCase() === team.name.toLowerCase());
-    this.home = this.teams.find(team => this.match.home.toLowerCase() === team.name.toLowerCase());
   }
 
   onCardTapped(m: Match) {

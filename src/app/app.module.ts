@@ -1,19 +1,22 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import {BrowserModule} from '@angular/platform-browser';
+import {ErrorHandler, NgModule} from '@angular/core';
+import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
 
-import { MyApp } from './app.component';
+import {MyApp} from './app.component';
 
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { SchedulePage } from '../pages/schedule/schedule';
-import { MatchService } from './match.service';
-import { TeamsService } from './teams.service';
-import { ComponentsModule } from '../components/components.module';
-import { TeamsPage } from '../pages/teams/teams';
-import { TeamDetailPage } from '../pages/team-detail/team-detail';
-import { FilterPopoverPageModule } from '../pages/filter-popover/filter-popover.module';
-import { MatchDetailPage } from '../pages/match-detail/match-detail';
+import {StatusBar} from '@ionic-native/status-bar';
+import {SplashScreen} from '@ionic-native/splash-screen';
+import {SchedulePage} from '../pages/schedule/schedule';
+import {ComponentsModule} from '../components/components.module';
+import {TeamsPage} from '../pages/teams/teams';
+import {TeamDetailPage} from '../pages/team-detail/team-detail';
+import {FilterPopoverPageModule} from '../pages/filter-popover/filter-popover.module';
+import {MatchDetailPage} from '../pages/match-detail/match-detail';
+import {HttpClientModule} from "@angular/common/http";
+import {RinksProvider} from '../providers/rink/rink.provider';
+import {DivisionsProvider} from '../providers/division/division.provider';
+import {TeamsProvider} from '../providers/team/team.provider';
+import {MatchesProvider} from '../providers/match/match.provider';
 
 @NgModule({
   declarations: [
@@ -27,6 +30,7 @@ import { MatchDetailPage } from '../pages/match-detail/match-detail';
     BrowserModule,
     ComponentsModule,
     FilterPopoverPageModule,
+    HttpClientModule,
     IonicModule.forRoot(MyApp, { mode: 'md' }),
   ],
   bootstrap: [IonicApp],
@@ -41,8 +45,10 @@ import { MatchDetailPage } from '../pages/match-detail/match-detail';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    MatchService,
-    TeamsService
+    RinksProvider,
+    DivisionsProvider,
+    TeamsProvider,
+    MatchesProvider
   ]
 })
 export class AppModule {}
