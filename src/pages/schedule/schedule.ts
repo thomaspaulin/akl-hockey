@@ -40,6 +40,11 @@ export class SchedulePage extends CleanUpOnViewWillUnload {
     this.filters$ = new BehaviorSubject([]);
   }
 
+  ionViewWillUnload() {
+    this.filteredMatches$.complete();
+    this.filters$.complete();
+  }
+
   openFilterPopover() {
     const popover = this.popoverCtrl.create(FilterPopoverPage);
     popover.present();
@@ -50,17 +55,20 @@ export class SchedulePage extends CleanUpOnViewWillUnload {
   }
 
   ionViewDidLoad() {
-    this.matches$ = this.matchService.fetchAll()
-      .takeUntil(this.ngUnsubscribe);
+    this.matches$ = this.matchService.fetchAll();
 
     //todo combine matches and filters observables
 
-    this.matches$.subscribe(matches => {
+    this.matches$
+      .takeUntil(this.ngUnsubscribe)
+      .subscribe(matches => {
         this.matches = matches.filter((match: Match) => filter.filterMatch(match, this.filters$.value));
         this.filteredMatches$.next(this.matches);
       });
 
-    this.filters$.subscribe((filters: Array<Filter>) => {
+    this.filters$
+      .takeUntil(this.ngUnsubscribe)
+      .subscribe((filters: Array<Filter>) => {
       this.filteredMatches$.next(this.matches.filter((match: Match) => filter.filterMatch(match, filters)));
     });
 
