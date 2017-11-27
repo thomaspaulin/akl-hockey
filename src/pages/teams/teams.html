@@ -9,7 +9,7 @@
 
 <ion-content padding>
   <ion-list>
-    <ion-item *ngFor="let team of teams" (click)="itemTapped($event, team)">
+    <ion-item *ngFor="let team of teams" (tap)="itemTapped($event, team)">
       <ion-avatar item-start>
         <img src="{{team.logoURL}}" alt="{{team.name}}">
       </ion-avatar>
