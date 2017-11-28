@@ -21,7 +21,7 @@ import { MatchesProvider } from "../../providers/match/match.provider";
 @IonicPage()
 @Component({
   selector:    'page-schedule',
-  templateUrl: 'schedule.html',
+  templateUrl: 'schedule.html'
 })
 export class SchedulePage extends CleanUpOnViewWillUnload {
   matches: Array<Match> = [];  // todo convert to RxJS
@@ -90,7 +90,10 @@ export class SchedulePage extends CleanUpOnViewWillUnload {
     this.matches$
       .takeUntil(this.ngUnsubscribe)
       .subscribe(() => {
-        refresher.complete();
+        if(refresher && !!refresher.complete)  {
+          // when using the refresh button this function doesn't exist so don't try to call it
+          refresher.complete();
+        }
       });
     this.matches$ = this.matchService.fetchAll();
   }
