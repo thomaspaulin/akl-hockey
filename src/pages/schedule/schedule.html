@@ -19,8 +19,11 @@
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <match-card *ngFor="let match of (filteredMatches$ | async)"
-              [match]="match"
-              [teams]="teams"
-              (cardTapped)="onCardTapped($event)"></match-card>
+  <ion-list [virtualScroll]="filteredMatches$ | async" no-lines>
+    <ion-item *virtualItem="let match">
+      <match-card [match]="match"
+                  [teams]="teams"
+                  (cardTapped)="onCardTapped($event)"></match-card>
+    </ion-item>
+  </ion-list>
 </ion-content>
