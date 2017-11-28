@@ -1,15 +1,15 @@
-import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams, PopoverController} from 'ionic-angular';
-import {Team} from '../../model/Team';
-import {Match} from '../../model/Match';
-import {Filter, filter} from "../../model/filter";
-import {CleanUpOnViewWillUnload} from '../../app/CleanupOnViewWillUnload';
-import {FilterPopoverPage} from '../filter-popover/filter-popover';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {MatchDetailPage} from '../match-detail/match-detail';
-import {TeamsProvider} from "../../providers/team/team.provider";
-import {Observable} from "rxjs/Observable";
-import {MatchesProvider} from "../../providers/match/match.provider";
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams, PopoverController } from 'ionic-angular';
+import { Team } from '../../model/Team';
+import { Match } from '../../model/Match';
+import { Filter, filter } from "../../model/filter";
+import { CleanUpOnViewWillUnload } from '../../app/CleanupOnViewWillUnload';
+import { FilterPopoverPage } from '../filter-popover/filter-popover';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { MatchDetailPage } from '../match-detail/match-detail';
+import { TeamsProvider } from "../../providers/team/team.provider";
+import { Observable } from "rxjs/Observable";
+import { MatchesProvider } from "../../providers/match/match.provider";
 
 /**
  * Generated class for the SchedulePage page.
@@ -20,7 +20,7 @@ import {MatchesProvider} from "../../providers/match/match.provider";
 
 @IonicPage()
 @Component({
-  selector: 'page-schedule',
+  selector:    'page-schedule',
   templateUrl: 'schedule.html',
 })
 export class SchedulePage extends CleanUpOnViewWillUnload {
@@ -69,8 +69,8 @@ export class SchedulePage extends CleanUpOnViewWillUnload {
     this.filters$
       .takeUntil(this.ngUnsubscribe)
       .subscribe((filters: Array<Filter>) => {
-      this.filteredMatches$.next(this.matches.filter((match: Match) => filter.filterMatch(match, filters)));
-    });
+        this.filteredMatches$.next(this.matches.filter((match: Match) => filter.filterMatch(match, filters)));
+      });
 
     this.teamsProvider.fetchAll()
       .takeUntil(this.ngUnsubscribe)
@@ -82,5 +82,16 @@ export class SchedulePage extends CleanUpOnViewWillUnload {
     this.navCtrl.push(MatchDetailPage, {
       match: m
     });
+  }
+
+  doRefresh(refresher: any) {
+    // set up the subscription before making the request so when it comes
+    // back and updates matches$ the subscription will fire
+    this.matches$
+      .takeUntil(this.ngUnsubscribe)
+      .subscribe(() => {
+        refresher.complete();
+      });
+    this.matches$ = this.matchService.fetchAll();
   }
 }
