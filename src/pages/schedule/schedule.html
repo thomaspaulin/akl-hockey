@@ -5,6 +5,9 @@
     </button>
     <ion-title>Schedule</ion-title>
     <ion-buttons end>
+      <button ion-button (tap)="doRefresh({})">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
       <button ion-button (tap)="openFilterPopover()">
         Filter&nbsp;<ion-icon name="arrow-down"></ion-icon>
       </button>
