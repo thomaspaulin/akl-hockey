@@ -1,6 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {V0_URL} from "../../app/app.constants";
+import { DEFAULT_AVATAR_URL, V0_URL } from "../../app/app.constants";
 import {v0} from "../../model/api/v0.models";
 import {Team} from "../../model/Team";
 import {Observable} from "rxjs/Observable";
@@ -41,13 +41,14 @@ export function teamsFromServerModel(teams: v0.Team[]): Team[] {
 export function teamFromServerModel(team: v0.Team): Team {
   if (!team) {
     return <Team>{
-      name: 'Unknown'
+      name: 'Unknown',
+      logoURL: DEFAULT_AVATAR_URL
     };
   }
   return <Team>{
     ID: team.ID,
     name: team.name,
     divisionName: team.divisionName,
-    logoURL: team.logoURL,
+    logoURL: team.logoURL? team.logoURL : DEFAULT_AVATAR_URL,
   };
 }
