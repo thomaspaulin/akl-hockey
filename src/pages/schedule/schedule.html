@@ -5,16 +5,25 @@
     </button>
     <ion-title>Schedule</ion-title>
     <ion-buttons end>
+      <button ion-button (tap)="doRefresh({})">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
       <button ion-button (tap)="openFilterPopover()">
-        Filter&nbsp;<ion-icon name="arrow-down"></ion-icon>
+        <ion-icon name="funnel"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content class="cards-bg" no-padding>
-  <match-card *ngFor="let match of (filteredMatches$ | async)"
-              [match]="match"
-              [teams]="teams"
-              (cardTapped)="onCardTapped($event)"></match-card>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-list [virtualScroll]="filteredMatches$ | async" no-lines>
+    <ion-item *virtualItem="let match">
+      <match-card [match]="match"
+                  [teams]="teams"
+                  (cardTapped)="onCardTapped($event)"></match-card>
+    </ion-item>
+  </ion-list>
 </ion-content>
