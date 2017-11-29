@@ -1,9 +1,10 @@
-import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
-import {Team} from '../../model/Team';
-import {TeamDetailPage} from '../team-detail/team-detail';
-import {TeamsProvider} from "../../providers/team/team.provider";
-import {CleanUpOnViewWillUnload} from "../../app/CleanupOnViewWillUnload";
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Observable } from 'rxjs/Observable';
+import { CleanUpOnViewWillUnload } from "../../app/CleanupOnViewWillUnload";
+import { Division } from '../../model/Division';
+import { DivisionsProvider } from '../../providers/division/division.provider';
+import { TeamDetailPage } from '../team-detail/team-detail';
 
 /**
  * Generated class for the TeamsPage page.
@@ -18,20 +19,16 @@ import {CleanUpOnViewWillUnload} from "../../app/CleanupOnViewWillUnload";
   templateUrl: 'teams.html',
 })
 export class TeamsPage extends CleanUpOnViewWillUnload {
-  teams: Array<Team>;
+  divisions$: Observable<Division[]>;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
-              private teamsProvider: TeamsProvider) {
+              private divisionProvider: DivisionsProvider) {
     super();
   }
 
   ionViewDidLoad() {
-    this.teamsProvider.fetchAll()
-      .takeUntil(this.ngUnsubscribe)
-      .subscribe((teams: Team[]) => {
-        this.teams = teams;
-      });
+    this.divisions$ = this.divisionProvider.fetchAll();
   }
 
   itemTapped(event, team) {
