@@ -12,7 +12,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content class="cards-bg" padding>
+<ion-content class="cards-bg" no-padding>
   <match-card *ngFor="let match of (filteredMatches$ | async)"
               [match]="match"
               [teams]="teams"
