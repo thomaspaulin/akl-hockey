@@ -45,9 +45,9 @@ export class SchedulePage extends CleanUpOnViewWillUnload {
     this.filters$.complete();
   }
 
-  openFilterPopover() {
+  openFilterPopover(ev) {
     const popover = this.popoverCtrl.create(FilterPopoverPage);
-    popover.present();
+    popover.present({ ev: ev });
 
     popover.onDidDismiss(response => {
       this.filters$.next(response);
