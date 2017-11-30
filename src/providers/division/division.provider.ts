@@ -4,6 +4,7 @@ import {Observable} from "rxjs/Observable";
 import {UNKNOWN_DIVISION, V0_URL} from "../../app/app.constants";
 import {v0} from "../../model/api/v0.models";
 import {Division} from "../../model/Division";
+import {teamsFromServerModel} from "../team/team.provider";
 
 @Injectable()
 export class DivisionsProvider {
@@ -34,6 +35,6 @@ export function divisionFromServerModel(div: v0.Division): Division {
   return <Division>{
     ID: div.ID,
     name: div.name,
-    teams: div.teams
+    teams: teamsFromServerModel(div.teams)
   };
 }
