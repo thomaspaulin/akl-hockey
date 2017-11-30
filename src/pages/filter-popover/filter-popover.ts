@@ -15,7 +15,7 @@ import {TeamsProvider} from "../../providers/team/team.provider";
 })
 export class FilterPopoverPage {
   //todo find a way to type ngModel better or use ngSubmit not ngModel
-  team: Array<any>;  // not sure why ngModel is making it an array
+  teamName: string;  // not sure why ngModel is making it an array
   teams$: Observable<Array<Team>>;
 
   constructor(public viewCtrl: ViewController,
@@ -29,9 +29,9 @@ export class FilterPopoverPage {
 
   close() {
     const filters: Array<Filter> = [];
-    if(this.team[0] && this.team[0] !== 'Show all') {
-      filters.push(<Filter>{key: 'away', value: this.team[0].name});
-      filters.push(<Filter>{key: 'home', value: this.team[0].name});
+    if (this.teamName && this.teamName !== 'Show all') {
+      filters.push(<Filter>{key: 'away', value: this.teamName});
+      filters.push(<Filter>{key: 'home', value: this.teamName});
     }
 
     this.viewCtrl.dismiss(filters);

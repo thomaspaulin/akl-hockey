@@ -30,8 +30,8 @@ export namespace filter {
           switch (filter.key) {
             case 'home':
             case 'away':
-              return m.home.name.toLowerCase() === filter.value.toLowerCase()
-                || m.away.name.toLowerCase() === filter.value.toLowerCase();
+              return m.home.name.toLowerCase() === filter.value.name.toLowerCase()
+                || m.away.name.toLowerCase() === filter.value.name.toLowerCase();
           }
         }
       }
