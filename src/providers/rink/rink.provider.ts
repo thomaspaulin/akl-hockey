@@ -24,6 +24,9 @@ export class RinksProvider {
 }
 
 export function rinksFromServerModel(rinks: v0.Rink[]): Rink[] {
+  if (!rinks) {
+    return [];
+  }
   return rinks.map((rink: v0.Rink) => rinkFromServerModel(rink));
 }
 

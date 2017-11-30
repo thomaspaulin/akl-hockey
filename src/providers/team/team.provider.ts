@@ -35,6 +35,9 @@ export class TeamsProvider {
 }
 
 export function teamsFromServerModel(teams: v0.Team[]): Team[] {
+  if (!teams) {
+    return [];
+  }
   return teams.map(team => teamFromServerModel(team));
 }
 

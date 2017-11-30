@@ -25,6 +25,9 @@ export class DivisionsProvider {
 }
 
 export function divisionsFromServerModel(divisions: v0.Division[]): Division[] {
+  if (!divisions) {
+    return [];
+  }
   return divisions.map((div: v0.Division) => divisionFromServerModel(div));
 }
 
