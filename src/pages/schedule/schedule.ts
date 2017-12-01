@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, PopoverController } from 'ionic-angular';
-import { Team } from '../../model/Team';
-import { Match } from '../../model/Match';
-import { Filter, filter } from "../../model/filter";
-import { CleanUpOnViewWillUnload } from '../../app/CleanupOnViewWillUnload';
-import { FilterPopoverPage } from '../filter-popover/filter-popover';
+import * as moment from 'moment';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { MatchDetailPage } from '../match-detail/match-detail';
-import { TeamsProvider } from "../../providers/team/team.provider";
 import { Observable } from "rxjs/Observable";
+import { CleanUpOnViewWillUnload } from '../../app/CleanupOnViewWillUnload';
+import { Filter, filter } from "../../model/filter";
+import { Match } from '../../model/Match';
+import { Team } from '../../model/Team';
 import { MatchesProvider } from "../../providers/match/match.provider";
+import { TeamsProvider } from "../../providers/team/team.provider";
+import { FilterPopoverPage } from '../filter-popover/filter-popover';
+import { MatchDetailPage } from '../match-detail/match-detail';
 
 /**
  * Generated class for the SchedulePage page.
@@ -28,6 +29,8 @@ export class SchedulePage extends CleanUpOnViewWillUnload {
   matches$: Observable<Match[]>;  // todo convert to RxJS
   filteredMatches$: BehaviorSubject<Array<Match>>;
   teams: Array<Team>;
+  start: Date = moment.utc().toDate();
+  end: Date = moment.utc().toDate();
   filters$: BehaviorSubject<Array<Filter>>;
 
   constructor(public navCtrl: NavController,
@@ -55,7 +58,11 @@ export class SchedulePage extends CleanUpOnViewWillUnload {
   }
 
   ionViewDidLoad() {
-    this.matches$ = this.matchService.fetchAll();
+    // todo change this.start and this.end to be those stored in the app state
+    this.matches$ = this.matchService.fetchBetween(
+      moment(this.start).utc().startOf('week').subtract(7, 'days').toDate(),
+      moment(this.end).utc().endOf('week').add(7, 'days').toDate()
+    );
 
     //todo combine matches and filters observables
 
@@ -95,6 +102,9 @@ export class SchedulePage extends CleanUpOnViewWillUnload {
           refresher.complete();
         }
       });
-    this.matches$ = this.matchService.fetchAll();
+    this.matches$ = this.matchService.fetchBetween(
+      moment(this.start).utc().startOf('week').subtract(7, 'days').toDate(),
+      moment(this.end).utc().endOf('week').add(7, 'days').toDate()
+    );
   }
 }
