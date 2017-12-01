@@ -17,6 +17,7 @@ import {RinksProvider} from '../providers/rink/rink.provider';
 import {DivisionsProvider} from '../providers/division/division.provider';
 import {TeamsProvider} from '../providers/team/team.provider';
 import {MatchesProvider} from '../providers/match/match.provider';
+import { IonicStorageModule } from '@ionic/storage';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import {MatchesProvider} from '../providers/match/match.provider';
     ComponentsModule,
     FilterPopoverPageModule,
     HttpClientModule,
+    IonicStorageModule.forRoot(),
     IonicModule.forRoot(MyApp, { mode: 'md' }),
   ],
   bootstrap: [IonicApp],

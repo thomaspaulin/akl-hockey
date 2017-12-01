@@ -4,6 +4,8 @@ import {Observable} from 'rxjs/Observable';
 import {Team} from '../../model/Team';
 import {Filter} from '../../model/filter';
 import {TeamsProvider} from "../../providers/team/team.provider";
+import {Storage} from '@ionic/storage';
+import { SCHEDULE_FILTER_KEY } from '../../app/app.constants';
 
 // todo convert to a component not a page. Make sure it's also an entrycomponent in app.module.ts when that's done
 // because I think that was the main reason it didn't work last try
@@ -20,10 +22,12 @@ export class FilterPopoverPage {
 
   constructor(public viewCtrl: ViewController,
               public navParams: NavParams,
-              private teams: TeamsProvider) {
+              private teams: TeamsProvider,
+              private storage: Storage) {
   }
 
   ionViewDidLoad() {
+    this.storage.get(SCHEDULE_FILTER_KEY).then(team => this.team = team);
     this.teams$ = this.teams.fetchAll()
   }
 
@@ -33,6 +37,7 @@ export class FilterPopoverPage {
       filters.push(<Filter>{key: 'away', value: this.team[0].name});
       filters.push(<Filter>{key: 'home', value: this.team[0].name});
     }
+    this.storage.set(SCHEDULE_FILTER_KEY, filters);
 
     this.viewCtrl.dismiss(filters);
   }
