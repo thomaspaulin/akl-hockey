@@ -1,20 +1,20 @@
-import { Component } from '@angular/core';
-import { Storage } from '@ionic/storage';
-import { IonicPage, NavController, NavParams, PopoverController } from 'ionic-angular';
+import {Component} from '@angular/core';
+import {Storage} from '@ionic/storage';
+import {IonicPage, ModalController, NavController, NavParams} from 'ionic-angular';
 import * as moment from 'moment';
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/observable/fromPromise';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from "rxjs/Observable";
-import { SCHEDULE_FILTER_KEY } from '../../app/app.constants';
-import { CleanUpOnViewWillUnload } from '../../app/CleanupOnViewWillUnload';
-import { Filter, filter } from "../../model/filter";
-import { Match } from '../../model/Match';
-import { Team } from '../../model/Team';
-import { MatchesProvider } from "../../providers/match/match.provider";
-import { TeamsProvider } from "../../providers/team/team.provider";
-import { FilterPopoverPage } from '../filter-popover/filter-popover';
-import { MatchDetailPage } from '../match-detail/match-detail';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {Observable} from "rxjs/Observable";
+import {SCHEDULE_FILTER_KEY} from '../../app/app.constants';
+import {CleanUpOnViewWillUnload} from '../../app/CleanupOnViewWillUnload';
+import {Filter, filter} from "../../model/filter";
+import {Match} from '../../model/Match';
+import {Team} from '../../model/Team';
+import {MatchesProvider} from "../../providers/match/match.provider";
+import {TeamsProvider} from "../../providers/team/team.provider";
+import {MatchDetailPage} from '../match-detail/match-detail';
+import {FilterModalComponent} from "../../components/filter-modal/filter-modal";
 
 /**
  * Generated class for the SchedulePage page.
@@ -34,12 +34,13 @@ export class SchedulePage extends CleanUpOnViewWillUnload {
   filteredMatches$: BehaviorSubject<Array<Match>>;
 
   teams: Array<Team>;
+  activeTeam: Team;
   start: Date = moment.utc().toDate();
   end: Date = moment.utc().toDate();
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
-              public popoverCtrl: PopoverController,
+              public modalCtrl: ModalController,
               private matchService: MatchesProvider,
               private teamsProvider: TeamsProvider,
               private storage: Storage) {
@@ -53,13 +54,19 @@ export class SchedulePage extends CleanUpOnViewWillUnload {
     this.filteredMatches$.complete();
   }
 
-  openFilterPopover(ev) {
-    const popover = this.popoverCtrl.create(FilterPopoverPage);
-    popover.present({ ev: ev });
-
-    popover.onDidDismiss(response => {
-      this.filters$.next(response);
-    })
+  presentFilterModal() {
+    const filterModal = this.modalCtrl.create(FilterModalComponent, {
+      teams: this.teams,
+      activeTeam: this.activeTeam,
+      start: this.start,
+      end: this.end
+    });
+    filterModal.present();
+    filterModal.onDidDismiss(data => {
+      this.activeTeam = data.activeTeam;
+      this.start = data.start;
+      this.end = data.end;
+    });
   }
 
   ionViewDidLoad() {

@@ -10,14 +10,14 @@ import {SchedulePage} from '../pages/schedule/schedule';
 import {ComponentsModule} from '../components/components.module';
 import {TeamsPage} from '../pages/teams/teams';
 import {TeamDetailPage} from '../pages/team-detail/team-detail';
-import {FilterPopoverPageModule} from '../pages/filter-popover/filter-popover.module';
 import {MatchDetailPage} from '../pages/match-detail/match-detail';
 import {HttpClientModule} from "@angular/common/http";
 import {RinksProvider} from '../providers/rink/rink.provider';
 import {DivisionsProvider} from '../providers/division/division.provider';
 import {TeamsProvider} from '../providers/team/team.provider';
 import {MatchesProvider} from '../providers/match/match.provider';
-import { IonicStorageModule } from '@ionic/storage';
+import {IonicStorageModule} from '@ionic/storage';
+import {FilterModalComponent} from "../components/filter-modal/filter-modal";
 
 @NgModule({
   declarations: [
@@ -25,12 +25,11 @@ import { IonicStorageModule } from '@ionic/storage';
     TeamsPage,
     TeamDetailPage,
     MatchDetailPage,
-    SchedulePage
+    SchedulePage,
   ],
   imports: [
     BrowserModule,
     ComponentsModule,
-    FilterPopoverPageModule,
     HttpClientModule,
     IonicStorageModule.forRoot(),
     IonicModule.forRoot(MyApp, { mode: 'md' }),
@@ -41,7 +40,8 @@ import { IonicStorageModule } from '@ionic/storage';
     TeamsPage,
     TeamDetailPage,
     MatchDetailPage,
-    SchedulePage
+    SchedulePage,
+    FilterModalComponent
   ],
   providers: [
     StatusBar,
