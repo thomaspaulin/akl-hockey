@@ -1,15 +1,20 @@
 import { Component } from '@angular/core';
+import { Storage } from '@ionic/storage';
 import { IonicPage, NavController, NavParams, PopoverController } from 'ionic-angular';
-import { Team } from '../../model/Team';
-import { Match } from '../../model/Match';
-import { Filter, filter } from "../../model/filter";
-import { CleanUpOnViewWillUnload } from '../../app/CleanupOnViewWillUnload';
-import { FilterPopoverPage } from '../filter-popover/filter-popover';
+import * as moment from 'moment';
+import 'rxjs/add/observable/combineLatest';
+import 'rxjs/add/observable/fromPromise';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { MatchDetailPage } from '../match-detail/match-detail';
-import { TeamsProvider } from "../../providers/team/team.provider";
 import { Observable } from "rxjs/Observable";
+import { SCHEDULE_FILTER_KEY } from '../../app/app.constants';
+import { CleanUpOnViewWillUnload } from '../../app/CleanupOnViewWillUnload';
+import { Filter, filter } from "../../model/filter";
+import { Match } from '../../model/Match';
+import { Team } from '../../model/Team';
 import { MatchesProvider } from "../../providers/match/match.provider";
+import { TeamsProvider } from "../../providers/team/team.provider";
+import { FilterPopoverPage } from '../filter-popover/filter-popover';
+import { MatchDetailPage } from '../match-detail/match-detail';
 
 /**
  * Generated class for the SchedulePage page.
@@ -24,25 +29,28 @@ import { MatchesProvider } from "../../providers/match/match.provider";
   templateUrl: 'schedule.html'
 })
 export class SchedulePage extends CleanUpOnViewWillUnload {
-  matches: Array<Match> = [];  // todo convert to RxJS
-  matches$: Observable<Match[]>;  // todo convert to RxJS
-  filteredMatches$: BehaviorSubject<Array<Match>>;
-  teams: Array<Team>;
+  matches$: Observable<Match[]>;
   filters$: BehaviorSubject<Array<Filter>>;
+  filteredMatches$: BehaviorSubject<Array<Match>>;
+
+  teams: Array<Team>;
+  start: Date = moment.utc().toDate();
+  end: Date = moment.utc().toDate();
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public popoverCtrl: PopoverController,
               private matchService: MatchesProvider,
-              private teamsProvider: TeamsProvider) {
+              private teamsProvider: TeamsProvider,
+              private storage: Storage) {
     super();
     this.filteredMatches$ = new BehaviorSubject([]);
     this.filters$ = new BehaviorSubject([]);
+    this.storage.get(SCHEDULE_FILTER_KEY).then(filters => this.filters$.next(filters)); //todo possible race condition with the filter dialog
   }
 
   ionViewWillUnload() {
     this.filteredMatches$.complete();
-    this.filters$.complete();
   }
 
   openFilterPopover(ev) {
@@ -55,21 +63,16 @@ export class SchedulePage extends CleanUpOnViewWillUnload {
   }
 
   ionViewDidLoad() {
-    this.matches$ = this.matchService.fetchAll();
+    // todo change this.start and this.end to be those stored in the app state
+    this.matches$ = this.matchService.fetchBetween(
+      moment(this.start).utc().startOf('week').subtract(7, 'days').toDate(),
+      moment(this.end).utc().endOf('week').add(7, 'days').toDate()
+    );
 
-    //todo combine matches and filters observables
-
-    this.matches$
+    Observable.combineLatest(this.filters$, this.matches$)
       .takeUntil(this.ngUnsubscribe)
-      .subscribe(matches => {
-        this.matches = matches.filter((match: Match) => filter.filterMatch(match, this.filters$.value));
-        this.filteredMatches$.next(this.matches);
-      });
-
-    this.filters$
-      .takeUntil(this.ngUnsubscribe)
-      .subscribe((filters: Array<Filter>) => {
-        this.filteredMatches$.next(this.matches.filter((match: Match) => filter.filterMatch(match, filters)));
+      .subscribe(([filters, matches]) => {
+        this.filteredMatches$.next(matches.filter((match: Match) => filter.filterMatch(match, filters)));
       });
 
     this.teamsProvider.fetchAll()
@@ -78,7 +81,6 @@ export class SchedulePage extends CleanUpOnViewWillUnload {
   }
 
   onCardTapped(m: any) {
-    console.log(m);
     this.navCtrl.push(MatchDetailPage, {
       match: m
     });
@@ -95,6 +97,9 @@ export class SchedulePage extends CleanUpOnViewWillUnload {
           refresher.complete();
         }
       });
-    this.matches$ = this.matchService.fetchAll();
+    this.matches$ = this.matchService.fetchBetween(
+      moment(this.start).utc().startOf('week').subtract(7, 'days').toDate(),
+      moment(this.end).utc().endOf('week').add(7, 'days').toDate()
+    );
   }
 }
