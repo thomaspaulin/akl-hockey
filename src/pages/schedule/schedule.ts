@@ -69,6 +69,8 @@ export class SchedulePage extends CleanUpOnViewWillUnload {
 
   ionViewDidLoad() {
     // todo cache teams. Allow a whole season before invalidating because of how the league works. Shorter if using other leagues
+    // todo when start and end change there should be a check to see if the new date range extends past when has been downloaded. If it has a new http query should be made
+    //    e.g. if matches downloaded are from Jun to Sep and then start changes to Apr then the games from start - 1 week until Sep should be fetched
     this.teamsProvider.fetchAll()
       .takeUntil(this.ngUnsubscribe)
       .subscribe(teams => this.teams = teams);
