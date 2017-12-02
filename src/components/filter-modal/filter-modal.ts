@@ -16,8 +16,10 @@ export class FilterModalComponent {
 
   teams: Team[];
   activeTeam: Team;
-  start: Date;
-  end: Date;
+  // Ionic doesn't give these back as Date objects... And it's causing all kinds of bugs if I transform everywhere
+  // so I'm keeping as strings until the last possible moment
+  start: string;
+  end: string;
 
   constructor(public viewCtrl: ViewController,
               params: NavParams) {
@@ -27,14 +29,26 @@ export class FilterModalComponent {
     this.end = params.data.end;
   }
 
-  dismiss() {
+  // Used by the select to determine if a team is the selected one
+  compareTeams(t1: Team, t2: Team): boolean {
+    return t1 && t2 && (t1.ID === t2.ID) || (t1.name === t2.name && t1.divisionName === t2.divisionName);
+  }
+
+  update() {
     const data = {
-      teams: this.teams,
       activeTeam: this.activeTeam,
       start: this.start,
       end: this.end
     };
 
     this.viewCtrl.dismiss(data);
+  }
+
+  cancel() {
+    this.viewCtrl.dismiss({
+      activeTeam: 'Show all',
+      start: `${new Date().getUTCFullYear()}-01-01`,
+      end: `${new Date().getUTCFullYear()}-12-31`
+    });
   }
 }

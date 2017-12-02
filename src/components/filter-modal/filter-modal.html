@@ -1,21 +1,25 @@
 <div class="filter-modal" padding>
   <h3>Filter Schedule</h3>
+  <ion-list>
   <ion-item>
     <ion-label>Team</ion-label>
-    <ion-select [(ngModel)]="activeTeam">
+    <ion-select [(ngModel)]="activeTeam"
+                [selectOptions]="{title: 'Team'}"
+                [compareWith]="compareTeams">
       <ion-option [value]="null">Show all</ion-option> <!-- todo do this is a better way because it it's yuck in the
       typescript code as is-->
       <ion-option *ngFor="let team of teams" [value]="team">{{team.name}}</ion-option>
     </ion-select>
-    {{team}}
   </ion-item>
   <ion-item>
     <ion-label>From:</ion-label>
-    <ion-datetime displayFormat="DDD D MMM YYYY" [(ngModel)]="start"></ion-datetime>
+    <ion-datetime displayFormat="DDD D MMM YYYY" [(ngModel)]="start" min="2017"></ion-datetime>
   </ion-item>
   <ion-item>
     <ion-label>To:</ion-label>
-    <ion-datetime displayFormat="DDD D MMM YYYY" [(ngModel)]="end"></ion-datetime>
+    <ion-datetime displayFormat="DDD D MMM YYYY" [(ngModel)]="end" min="2017"></ion-datetime>
   </ion-item>
-  <button ion-button (tap)="dismiss()">Apply</button>
+  </ion-list>
+  <button ion-button (tap)="update()">Save</button>
+  <button ion-button (tap)="cancel()">Close</button>
 </div>
