@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
-import {NavParams, ViewController} from "ionic-angular";
-import {Team} from "../../model/Team";
+import { Component } from '@angular/core';
+import { NavParams, ViewController } from "ionic-angular";
+import { Team } from "../../model/Team";
 
 /**
  * Generated class for the FilterModalComponent component.
@@ -14,19 +14,25 @@ import {Team} from "../../model/Team";
 })
 export class FilterModalComponent {
 
-  teams: Team[];
-  activeTeam: Team;
+  readonly defaultStart = `${new Date().getUTCFullYear()}-01-01`;
+  readonly defaultEnd = `${new Date().getUTCFullYear()}-12-31`;
+
+  teams: Team[] = [];
+  activeTeam: Team | string = 'Show all';
   // Ionic doesn't give these back as Date objects... And it's causing all kinds of bugs if I transform everywhere
   // so I'm keeping as strings until the last possible moment
-  start: string;
-  end: string;
+  start: string = this.defaultStart;
+
+  end: string = this.defaultEnd;
 
   constructor(public viewCtrl: ViewController,
               params: NavParams) {
-    this.teams = params.data.teams;
-    this.activeTeam = params.data.activeTeam;
-    this.start = params.data.start;
-    this.end = params.data.end;
+    if (params.data) {
+      this.teams = params.data.teams;
+      this.activeTeam = params.data.activeTeam;
+      this.start = params.data.start;
+      this.end = params.data.end;
+    }
   }
 
   // Used by the select to determine if a team is the selected one
@@ -47,8 +53,8 @@ export class FilterModalComponent {
   cancel() {
     this.viewCtrl.dismiss({
       activeTeam: 'Show all',
-      start: `${new Date().getUTCFullYear()}-01-01`,
-      end: `${new Date().getUTCFullYear()}-12-31`
+      start:      this.defaultStart,
+      end:        this.defaultEnd
     });
   }
 }
