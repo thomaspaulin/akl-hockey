@@ -15,7 +15,6 @@ import { Match } from '../../model/Match';
 import { Team } from '../../model/Team';
 import { MatchesProvider } from "../../providers/match/match.provider";
 import { TeamsProvider } from "../../providers/team/team.provider";
-import { MatchDetailPage } from '../match-detail/match-detail';
 
 @IonicPage()
 @Component({
@@ -94,9 +93,10 @@ export class SchedulePage extends CleanUpOnViewWillUnload {
   }
 
   onCardTapped(m: any) {
-    this.navCtrl.push(MatchDetailPage, {
-      match: m
-    });
+    // Don't allow tapping for 1.0.0 while the cards are meaningless
+    // this.navCtrl.push(MatchDetailPage, {
+    //   match: m
+    // });
   }
 
   doRefresh(refresher: any) {
