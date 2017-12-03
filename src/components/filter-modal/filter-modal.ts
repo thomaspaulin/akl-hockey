@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavParams, ViewController } from "ionic-angular";
+import * as moment from 'moment';
 import { Team } from "../../model/Team";
+import { formatDate } from '../../providers/match/match.provider';
 
 /**
  * Generated class for the FilterModalComponent component.
@@ -14,8 +16,8 @@ import { Team } from "../../model/Team";
 })
 export class FilterModalComponent {
 
-  readonly defaultStart = `${new Date().getUTCFullYear()}-01-01`;
-  readonly defaultEnd = `${new Date().getUTCFullYear()}-12-31`;
+  readonly defaultStart = formatDate(moment(new Date()).startOf('week').subtract(7, 'days').toDate());
+  readonly defaultEnd = formatDate(moment(new Date()).endOf('week').add(7, 'days').toDate());
 
   teams: Team[] = [];
   activeTeam: Team | string = 'Show all';
