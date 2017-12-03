@@ -89,6 +89,19 @@ export class SchedulePage extends CleanUpOnViewWillUnload {
         }
 
         this.filteredMatches$.next(matches.filter((match: Match) => filter.filterMatch(match, filters)));
+
+        let shouldUpdateEarlierMatches = true;
+        let shouldUpdateLaterMatches = true;
+        matches.map(match => {
+          // if we find no matches outside the filters then do a fetch
+          shouldUpdateEarlierMatches = shouldUpdateEarlierMatches && new Date(this.start).getTime() < match.date.getTime();
+          shouldUpdateLaterMatches = shouldUpdateLaterMatches && new Date(this.end).getTime() > match.date.getTime();
+        });
+
+        if (shouldUpdateEarlierMatches || shouldUpdateLaterMatches) {
+          // todo mutex this so it won't get thrashed and thrash the server
+          this.doRefresh({});
+        }
       });
   }
 
