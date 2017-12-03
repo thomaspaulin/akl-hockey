@@ -52,7 +52,7 @@ export function matchFromServerModel(m: v0.Match): Match {
 
 export function formatDate(d: Date): string {
   const year = `${d.getFullYear()}`;
-  const month = (d.getMonth() + 1) < 10 ? `0${d.getMonth() + 1}` : `${d.getMonth()}`;
-  const day = (d.getDate() + 1) < 10 ? `0${d.getDate() + 1}` : `${d.getDate()}`;
+  const month = (d.getMonth() + 1) < 10 ? `0${d.getMonth() + 1}` : `${d.getMonth() + 1}`;
+  const day = (d.getDate() + 1) < 10 ? `0${d.getDate() + 1}` : `${d.getDate() + 1}`;
   return `${year}-${month}-${day}`;
 }
