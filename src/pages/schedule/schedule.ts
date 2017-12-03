@@ -1,26 +1,36 @@
-import { Component } from '@angular/core';
-import { Storage } from '@ionic/storage';
-import { IonicPage, ModalController, NavController, NavParams } from 'ionic-angular';
+import {Component} from '@angular/core';
+import {Storage} from '@ionic/storage';
+import {IonicPage, ModalController, NavController, NavParams} from 'ionic-angular';
 import * as moment from 'moment';
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/operator/first';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from "rxjs/Observable";
-import { SCHEDULE_FILTER_KEY } from '../../app/app.constants';
-import { CleanUpOnViewWillUnload } from '../../app/CleanupOnViewWillUnload';
-import { FilterModalComponent } from "../../components/filter-modal/filter-modal";
-import { filter, FilterValue } from "../../model/filter";
-import { Match } from '../../model/Match';
-import { Team } from '../../model/Team';
-import { MatchesProvider } from "../../providers/match/match.provider";
-import { TeamsProvider } from "../../providers/team/team.provider";
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {Observable} from "rxjs/Observable";
+import {SCHEDULE_FILTER_KEY} from '../../app/app.constants';
+import {CleanUpOnViewWillUnload} from '../../app/CleanupOnViewWillUnload';
+import {FilterModalComponent} from "../../components/filter-modal/filter-modal";
+import {filter, FilterValue} from "../../model/filter";
+import {Match} from '../../model/Match';
+import {Team} from '../../model/Team';
+import {MatchesProvider} from "../../providers/match/match.provider";
+import {TeamsProvider} from "../../providers/team/team.provider";
 
 @IonicPage()
 @Component({
   selector:    'page-schedule',
   templateUrl: 'schedule.html'
 })
+
+
+// TODO: Make this page the container component and make a presentational component for the schedule view
+// TODO: Add a no matches found placeholder
+// TODO: Add a spinner when fetching
+// TODO: cache teams. Allow a whole season before invalidating because of how the league works. Shorter if using other leagues
+
+
+
+
 export class SchedulePage extends CleanUpOnViewWillUnload {
   matches$: Observable<Match[]>;
   filters$: BehaviorSubject<{[key: string]: FilterValue}>;
@@ -67,9 +77,6 @@ export class SchedulePage extends CleanUpOnViewWillUnload {
   }
 
   ionViewDidLoad() {
-    // todo cache teams. Allow a whole season before invalidating because of how the league works. Shorter if using other leagues
-    // todo when start and end change there should be a check to see if the new date range extends past when has been downloaded. If it has a new http query should be made
-    //    e.g. if matches downloaded are from Jun to Sep and then start changes to Apr then the games from start - 1 week until Sep should be fetched
     this.teamsProvider.fetchAll()
       .takeUntil(this.ngUnsubscribe)
       .subscribe(teams => this.teams = teams);
