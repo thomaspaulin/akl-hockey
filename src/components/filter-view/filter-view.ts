@@ -1,5 +1,6 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Team} from "../../model/Team";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Team } from "../../model/Team";
+import { formatDate } from '../../providers/match/match.provider';
 
 /**
  * Generated class for the FilterViewComponent component.
@@ -11,26 +12,33 @@ import {Team} from "../../model/Team";
   selector: 'filter-view',
   templateUrl: 'filter-view.html'
 })
-export class FilterViewComponent {
+export class FilterViewComponent implements OnInit {
   @Input() teams: Team[] = [];
-  @Input() activeTeam: Team;
+  @Input() activeTeam: Team = null;
   @Input() teamCompareFn: Function;
-  @Input() start: string;
-  @Input() end: string;
+  @Input() start: Date;
+  @Input() end: Date;
 
   @Output() save = new EventEmitter<any>();
   @Output() cancel = new EventEmitter<void>();
 
   selectOpts = {title: 'Team'};
+  startStr: string;
+  endStr: string;
 
   constructor() {
+  }
+
+  ngOnInit(): void {
+    this.startStr = this.start ? formatDate(this.start) : '';
+    this.endStr = this.end ? formatDate(this.end) : '';
   }
 
   onSave() {
     const data = {
       activeTeam: this.activeTeam,
-      start: this.start,
-      end: this.end
+      start:      new Date(Date.parse(this.startStr)),
+      end:        new Date(Date.parse(this.endStr))
     };
     this.save.emit(data);
   }

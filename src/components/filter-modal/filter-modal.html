@@ -1,5 +1,7 @@
 <filter-view [teams]="teams"
              [activeTeam]="activeTeam"
              [teamCompareFn]="compareTeams"
+             [start]="start"
+             [end]="end"
              (save)="onSave($event)"
              (cancel)="onCancel()"></filter-view>

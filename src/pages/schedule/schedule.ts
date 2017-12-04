@@ -1,20 +1,20 @@
-import {Component} from '@angular/core';
-import {Storage} from '@ionic/storage';
-import {IonicPage, ModalController, NavController, NavParams} from 'ionic-angular';
+import { Component } from '@angular/core';
+import { Storage } from '@ionic/storage';
+import { IonicPage, ModalController, NavController, NavParams } from 'ionic-angular';
 import * as moment from 'moment';
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/operator/first';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {Observable} from "rxjs/Observable";
-import {SCHEDULE_FILTER_KEY} from '../../app/app.constants';
-import {CleanUpOnViewWillUnload} from '../../app/CleanupOnViewWillUnload';
-import {FilterModalComponent} from "../../components/filter-modal/filter-modal";
-import {filter, FilterValue} from "../../model/filter";
-import {Match} from '../../model/Match';
-import {Team} from '../../model/Team';
-import {MatchesProvider} from "../../providers/match/match.provider";
-import {TeamsProvider} from "../../providers/team/team.provider";
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from "rxjs/Observable";
+import { SCHEDULE_FILTER_KEY } from '../../app/app.constants';
+import { CleanUpOnViewWillUnload } from '../../app/CleanupOnViewWillUnload';
+import { FilterModalComponent } from "../../components/filter-modal/filter-modal";
+import { filter, Filters } from "../../model/filter";
+import { Match } from '../../model/Match';
+import { Team } from '../../model/Team';
+import { MatchesProvider } from "../../providers/match/match.provider";
+import { TeamsProvider } from "../../providers/team/team.provider";
 
 @IonicPage()
 @Component({
@@ -33,13 +33,13 @@ import {TeamsProvider} from "../../providers/team/team.provider";
 
 export class SchedulePage extends CleanUpOnViewWillUnload {
   matches$: Observable<Match[]>;
-  filters$: BehaviorSubject<{[key: string]: FilterValue}>;
+  filters$: BehaviorSubject<Filters>;
   filteredMatches$: BehaviorSubject<Array<Match>>;
 
-  teams: Array<Team>;
-  activeTeam: Team;
-  start: string = new Date().toDateString();
-  end: string = new Date().toDateString();
+  teams: Array<Team> = [];
+  activeTeam: Team = null;
+  start: Date = moment(new Date()).startOf('week').subtract(7, 'days').toDate();
+  end: Date = moment(new Date()).endOf('day').add(7, 'days').toDate();
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -49,8 +49,14 @@ export class SchedulePage extends CleanUpOnViewWillUnload {
               private storage: Storage) {
     super();
     this.filteredMatches$ = new BehaviorSubject([]);
-    this.filters$ = new BehaviorSubject({});
-    this.storage.get(SCHEDULE_FILTER_KEY).then(filters => this.filters$.next(filters)); //todo possible race condition with the filter dialog
+    this.filters$ = new BehaviorSubject({
+      activeTeam: null,
+      start:      this.start,
+      end:        this.end
+    });
+    this.storage.get(SCHEDULE_FILTER_KEY).then(filters => {
+      this.filters$.next(filters)
+    }); //todo possible race condition with the filter dialog
   }
 
   ionViewWillUnload() {
@@ -81,18 +87,15 @@ export class SchedulePage extends CleanUpOnViewWillUnload {
       .takeUntil(this.ngUnsubscribe)
       .subscribe(teams => this.teams = teams);
 
-    this.matches$ = this.matchService.fetchBetween(
-      moment(new Date(this.start)).startOf('week').subtract(7, 'days').toDate(),
-      moment(new Date(this.end)).endOf('week').add(7, 'days').toDate()
-    );
+    this.matches$ = this.matchService.fetchBetween(this.start, this.end);
 
     Observable.combineLatest(this.filters$, this.matches$)
       .takeUntil(this.ngUnsubscribe)
       .subscribe(([filters, matches]) => {
         if (filters) {
-          this.activeTeam = filters.activeTeam as Team;
-          this.start = filters.start as string;
-          this.end = filters.end as string;
+          this.activeTeam = filters.activeTeam;
+          this.start = filters.start;
+          this.end = filters.end;
         }
 
         this.filteredMatches$.next(matches.filter((match: Match) => filter.filterMatch(match, filters)));
@@ -128,9 +131,6 @@ export class SchedulePage extends CleanUpOnViewWillUnload {
           refresher.complete();
         }
       });
-    this.matches$ = this.matchService.fetchBetween(
-      moment(new Date(this.start)).startOf('week').subtract(7, 'days').toDate(),
-      moment(new Date(this.end)).endOf('week').add(7, 'days').toDate()
-    );
+    this.matches$ = this.matchService.fetchBetween(this.start, this.end);
   }
 }

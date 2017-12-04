@@ -6,18 +6,17 @@
       <ion-select [(ngModel)]="activeTeam"
                   [selectOptions]="selectOpts"
                   [compareWith]="teamCompareFn">
-        <ion-option [value]="null">Show all</ion-option> <!-- todo do this is a better way because it it's yuck in the
-      typescript code as is-->
+        <ion-option [value]="null">Show all</ion-option>
         <ion-option *ngFor="let team of teams" [value]="team">{{team.name}}</ion-option>
       </ion-select>
     </ion-item>
     <ion-item>
       <ion-label>From:</ion-label>
-      <ion-datetime displayFormat="DDD D MMM YYYY" [(ngModel)]="start" min="2017"></ion-datetime>
+      <ion-datetime displayFormat="DDD D MMM YYYY" [(ngModel)]="startStr" min="2017"></ion-datetime>
     </ion-item>
     <ion-item>
       <ion-label>To:</ion-label>
-      <ion-datetime displayFormat="DDD D MMM YYYY" [(ngModel)]="end" min="2017"></ion-datetime>
+      <ion-datetime displayFormat="DDD D MMM YYYY" [(ngModel)]="endStr" min="2017"></ion-datetime>
     </ion-item>
   </ion-list>
   <button ion-button (tap)="onSave()">Save</button>
