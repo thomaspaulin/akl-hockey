@@ -1,20 +1,20 @@
-import { Component } from '@angular/core';
-import { Storage } from '@ionic/storage';
-import { IonicPage, ModalController, NavController, NavParams } from 'ionic-angular';
+import {Component} from '@angular/core';
+import {Storage} from '@ionic/storage';
+import {IonicPage, ModalController, NavController, NavParams} from 'ionic-angular';
 import * as moment from 'moment';
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/operator/first';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from "rxjs/Observable";
-import { SCHEDULE_FILTER_KEY } from '../../app/app.constants';
-import { CleanUpOnViewWillUnload } from '../../app/CleanupOnViewWillUnload';
-import { FilterModalComponent } from "../../components/filter-modal/filter-modal";
-import { filter, Filters } from "../../model/filter";
-import { Match } from '../../model/Match';
-import { Team } from '../../model/Team';
-import { MatchesProvider } from "../../providers/match/match.provider";
-import { TeamsProvider } from "../../providers/team/team.provider";
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {Observable} from "rxjs/Observable";
+import {SCHEDULE_FILTER_KEY} from '../../app/app.constants';
+import {CleanUpOnViewWillUnload} from '../../app/CleanupOnViewWillUnload';
+import {FilterModalComponent} from "../../components/filter-modal/filter-modal";
+import {filter, Filters} from "../../model/filter";
+import {Match} from '../../model/Match';
+import {Team} from '../../model/Team';
+import {MatchesProvider} from "../../providers/match/match.provider";
+import {TeamsProvider} from "../../providers/team/team.provider";
 
 @IonicPage()
 @Component({
@@ -73,12 +73,14 @@ export class SchedulePage extends CleanUpOnViewWillUnload {
     const filterModal = this.modalCtrl.create(FilterModalComponent, data);
     filterModal.present();
     filterModal.onDidDismiss(data => {
-      this.storage.set(SCHEDULE_FILTER_KEY, {
-        activeTeam: data.activeTeam,
-        start:      data.start,
-        end:        data.end
-      });
-      this.filters$.next(data)
+      if (data) {
+        this.storage.set(SCHEDULE_FILTER_KEY, {
+          activeTeam: data.activeTeam,
+          start: data.start,
+          end: data.end
+        });
+        this.filters$.next(data)
+      }
     });
   }
 
