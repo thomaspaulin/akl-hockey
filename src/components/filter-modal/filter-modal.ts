@@ -1,8 +1,7 @@
-import {Component} from '@angular/core';
-import {NavParams, ViewController} from "ionic-angular";
+import { Component } from '@angular/core';
+import { NavParams, ViewController } from "ionic-angular";
 import * as moment from 'moment';
-import {Team} from "../../model/Team";
-import {formatDate} from '../../providers/match/match.provider';
+import { Team } from "../../model/Team";
 
 /**
  * Generated class for the FilterModalComponent component.
@@ -16,16 +15,16 @@ import {formatDate} from '../../providers/match/match.provider';
 })
 export class FilterModalComponent {
 
-  readonly defaultStart = formatDate(moment(new Date()).startOf('week').subtract(7, 'days').toDate());
-  readonly defaultEnd = formatDate(moment(new Date()).endOf('week').add(7, 'days').toDate());
+  readonly defaultStart = moment(new Date()).startOf('week').subtract(7, 'days').toDate();
+  readonly defaultEnd = moment(new Date()).endOf('week').add(7, 'days').toDate();
 
   teams: Team[] = [];
-  activeTeam: Team | string = 'Show all';
+  activeTeam: Team = null;
   // Ionic doesn't give these back as Date objects... And it's causing all kinds of bugs if I transform everywhere
   // so I'm keeping as strings until the last possible moment
-  start: string = this.defaultStart;
+  start: Date = this.defaultStart;
 
-  end: string = this.defaultEnd;
+  end: Date = this.defaultEnd;
 
   constructor(public viewCtrl: ViewController,
               params: NavParams) {
@@ -48,9 +47,9 @@ export class FilterModalComponent {
 
   onCancel() {
     this.viewCtrl.dismiss({
-      activeTeam: 'Show all',
-      start:      this.defaultStart,
-      end:        this.defaultEnd
+      activeTeam: this.activeTeam,
+      start:      this.start,
+      end:        this.end
     });
   }
 }

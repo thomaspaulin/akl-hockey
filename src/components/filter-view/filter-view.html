@@ -13,11 +13,11 @@
     </ion-item>
     <ion-item>
       <ion-label>From:</ion-label>
-      <ion-datetime displayFormat="DDD D MMM YYYY" [(ngModel)]="start" min="2017"></ion-datetime>
+      <ion-datetime displayFormat="DDD D MMM YYYY" [(ngModel)]="startStr" min="2017"></ion-datetime>
     </ion-item>
     <ion-item>
       <ion-label>To:</ion-label>
-      <ion-datetime displayFormat="DDD D MMM YYYY" [(ngModel)]="end" min="2017"></ion-datetime>
+      <ion-datetime displayFormat="DDD D MMM YYYY" [(ngModel)]="endStr" min="2017"></ion-datetime>
     </ion-item>
   </ion-list>
   <button ion-button (tap)="onSave()">Save</button>
