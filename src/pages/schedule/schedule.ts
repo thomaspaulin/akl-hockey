@@ -25,7 +25,6 @@ import {TeamsProvider} from "../../providers/team/team.provider";
 
 // TODO: Make this page the container component and make a presentational component for the schedule view
 // TODO: Add a no matches found placeholder
-// TODO: Add a spinner when fetching
 // TODO: cache teams. Allow a whole season before invalidating because of how the league works. Shorter if using other leagues
 
 
@@ -35,6 +34,7 @@ export class SchedulePage extends CleanUpOnViewWillUnload {
   matches$: Observable<Match[]>;
   filters$: BehaviorSubject<Filters>;
   filteredMatches$: BehaviorSubject<Array<Match>>;
+  loading$: BehaviorSubject<boolean>;
 
   teams: Array<Team> = [];
   activeTeam: Team = null;
@@ -54,6 +54,7 @@ export class SchedulePage extends CleanUpOnViewWillUnload {
       start:      this.start,
       end:        this.end
     });
+    this.loading$ = new BehaviorSubject(false);
     this.storage.get(SCHEDULE_FILTER_KEY).then(filters => {
       this.filters$.next(filters)
     }); //todo possible race condition with the filter dialog
@@ -90,6 +91,7 @@ export class SchedulePage extends CleanUpOnViewWillUnload {
       .subscribe(teams => this.teams = teams);
 
     this.matches$ = this.matchService.fetchBetween(this.start, this.end);
+    this.matches$.subscribe(ms => this.loading$.next(ms.length > 0));
 
     Observable.combineLatest(this.filters$, this.matches$)
       .takeUntil(this.ngUnsubscribe)
