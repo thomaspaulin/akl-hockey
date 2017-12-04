@@ -38,11 +38,8 @@ export class SchedulePage extends CleanUpOnViewWillUnload {
 
   teams: Array<Team> = [];
   activeTeam: Team = null;
-  start: Date = new Date();
-  end: Date = new Date();
-
-  readonly startMinusWeek = moment(new Date(this.start)).startOf('week').subtract(7, 'days').toDate();
-  readonly endPlusWeek = moment(new Date(this.end)).endOf('week').add(7, 'days').toDate();
+  start: Date = moment(new Date()).startOf('week').subtract(7, 'days').toDate();
+  end: Date = moment(new Date()).endOf('day').add(7, 'days').toDate();
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -54,10 +51,12 @@ export class SchedulePage extends CleanUpOnViewWillUnload {
     this.filteredMatches$ = new BehaviorSubject([]);
     this.filters$ = new BehaviorSubject({
       activeTeam: null,
-      start:      this.startMinusWeek,
-      end:        this.endPlusWeek
+      start:      this.start,
+      end:        this.end
     });
-    this.storage.get(SCHEDULE_FILTER_KEY).then(filters => this.filters$.next(filters)); //todo possible race condition with the filter dialog
+    this.storage.get(SCHEDULE_FILTER_KEY).then(filters => {
+      this.filters$.next(filters)
+    }); //todo possible race condition with the filter dialog
   }
 
   ionViewWillUnload() {
@@ -88,7 +87,7 @@ export class SchedulePage extends CleanUpOnViewWillUnload {
       .takeUntil(this.ngUnsubscribe)
       .subscribe(teams => this.teams = teams);
 
-    this.matches$ = this.matchService.fetchBetween(this.startMinusWeek, this.endPlusWeek);
+    this.matches$ = this.matchService.fetchBetween(this.start, this.end);
 
     Observable.combineLatest(this.filters$, this.matches$)
       .takeUntil(this.ngUnsubscribe)
@@ -132,6 +131,6 @@ export class SchedulePage extends CleanUpOnViewWillUnload {
           refresher.complete();
         }
       });
-    this.matches$ = this.matchService.fetchBetween(this.startMinusWeek, this.endPlusWeek);
+    this.matches$ = this.matchService.fetchBetween(this.start, this.end);
   }
 }
