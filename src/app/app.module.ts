@@ -18,6 +18,7 @@ import {TeamsProvider} from '../providers/team/team.provider';
 import {MatchesProvider} from '../providers/match/match.provider';
 import {IonicStorageModule} from '@ionic/storage';
 import {FilterModalComponent} from "../components/filter-modal/filter-modal";
+import {PipesModule} from "../pipes/pipes.module";
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import {FilterModalComponent} from "../components/filter-modal/filter-modal";
     BrowserModule,
     ComponentsModule,
     HttpClientModule,
+    PipesModule,
     IonicStorageModule.forRoot(),
     IonicModule.forRoot(MyApp, { mode: 'md' }),
   ],

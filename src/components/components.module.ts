@@ -4,6 +4,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {IonicModule} from 'ionic-angular';
 import {FilterModalComponent} from './filter-modal/filter-modal';
 import {FilterViewComponent} from './filter-view/filter-view';
+import {PipesModule} from "../pipes/pipes.module";
 
 @NgModule({
 	declarations: [
@@ -13,7 +14,8 @@ import {FilterViewComponent} from './filter-view/filter-view';
   ],
 	imports: [
     BrowserModule,
-    IonicModule
+    IonicModule,
+    PipesModule
   ],
 	exports: [
     MatchCardComponent,
