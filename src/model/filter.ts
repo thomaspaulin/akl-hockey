@@ -15,7 +15,7 @@ export namespace filter {
       if (filters) {
         let passes = true;
         if (filters.activeTeam) {
-          passes = passes && (filters.activeTeam == null || (m.home.name.toLowerCase() === filters.activeTeam.name.toLowerCase()
+          passes = passes && (filters.activeTeam as any === 'Show all' || (m.home.name.toLowerCase() === filters.activeTeam.name.toLowerCase()
             || m.away.name.toLowerCase() === filters.activeTeam.name.toLowerCase()));
         }
         if (filters.start) {

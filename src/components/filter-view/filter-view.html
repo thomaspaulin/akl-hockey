@@ -6,8 +6,7 @@
       <ion-select [(ngModel)]="activeTeam"
                   [selectOptions]="selectOpts"
                   [compareWith]="teamCompareFn">
-        <ion-option [value]="null">Show all</ion-option> <!-- todo do this is a better way because it it's yuck in the
-      typescript code as is-->
+        <ion-option [value]="null">Show all</ion-option>
         <ion-option *ngFor="let team of teams" [value]="team">{{team.name}}</ion-option>
       </ion-select>
     </ion-item>
