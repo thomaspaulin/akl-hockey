@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
-import { NavParams, ViewController } from "ionic-angular";
+import {Component} from '@angular/core';
+import {NavParams, ViewController} from "ionic-angular";
 import * as moment from 'moment';
-import { Team } from "../../model/Team";
-import { formatDate } from '../../providers/match/match.provider';
+import {Team} from "../../model/Team";
+import {formatDate} from '../../providers/match/match.provider';
 
 /**
  * Generated class for the FilterModalComponent component.
@@ -42,17 +42,11 @@ export class FilterModalComponent {
     return t1 && t2 && (t1.ID === t2.ID) || (t1.name === t2.name && t1.divisionName === t2.divisionName);
   }
 
-  update() {
-    const data = {
-      activeTeam: this.activeTeam,
-      start: this.start,
-      end: this.end
-    };
-
-    this.viewCtrl.dismiss(data);
+  onSave(filters: any) {
+    this.viewCtrl.dismiss(filters);
   }
 
-  cancel() {
+  onCancel() {
     this.viewCtrl.dismiss({
       activeTeam: 'Show all',
       start:      this.defaultStart,
