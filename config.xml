@@ -13,10 +13,10 @@
   <allow-intent href="https://*/*"/>
   <preference name="android-minSdkVersion" value="16"/>
   <preference name="BackupWebStorage" value="none"/>
-  <preference name="DisallowOverscroll" value="true"/>
+  <preference name="DisallowOverscroll" value="false" />
+  <preference name="UIWebViewBounce" value="true" />
+  <preference name="webviewbounce" value="true" />
   <preference name="LogLevel" value="WARN"/>
-  <preference name="UIWebViewBounce" value="false"/>
-  <preference name="webviewbounce" value="false"/>
   <platform name="android">
     <allow-intent href="market:*"/>
     <icon density="ldpi" src="resources/android/icon/ldpi-icon.png"/>
