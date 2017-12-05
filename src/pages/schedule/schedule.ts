@@ -1,20 +1,20 @@
-import { Component } from '@angular/core';
-import { Storage } from '@ionic/storage';
-import { IonicPage, ModalController, NavController, NavParams } from 'ionic-angular';
+import {Component} from '@angular/core';
+import {Storage} from '@ionic/storage';
+import {IonicPage, ModalController, NavController, NavParams} from 'ionic-angular';
 import * as moment from 'moment';
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/operator/first';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from "rxjs/Observable";
-import { SCHEDULE_FILTER_KEY } from '../../app/app.constants';
-import { CleanUpOnViewWillUnload } from '../../app/CleanupOnViewWillUnload';
-import { FilterModalComponent } from "../../components/filter-modal/filter-modal";
-import { filter, Filters } from "../../model/filter";
-import { Match } from '../../model/Match';
-import { Team } from '../../model/Team';
-import { MatchesProvider } from "../../providers/match/match.provider";
-import { TeamsProvider } from "../../providers/team/team.provider";
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {Observable} from "rxjs/Observable";
+import {SCHEDULE_FILTER_KEY} from '../../app/app.constants';
+import {CleanUpOnViewWillUnload} from '../../app/CleanupOnViewWillUnload';
+import {FilterModalComponent} from "../../components/filter-modal/filter-modal";
+import {filter, Filters} from "../../model/filter";
+import {Match} from '../../model/Match';
+import {Team} from '../../model/Team';
+import {MatchesProvider} from "../../providers/match/match.provider";
+import {TeamsProvider} from "../../providers/team/team.provider";
 
 @IonicPage()
 @Component({
@@ -25,7 +25,6 @@ import { TeamsProvider } from "../../providers/team/team.provider";
 
 // TODO: Make this page the container component and make a presentational component for the schedule view
 // TODO: Add a no matches found placeholder
-// TODO: Add a spinner when fetching
 // TODO: cache teams. Allow a whole season before invalidating because of how the league works. Shorter if using other leagues
 
 
@@ -35,6 +34,7 @@ export class SchedulePage extends CleanUpOnViewWillUnload {
   matches$: Observable<Match[]>;
   filters$: BehaviorSubject<Filters>;
   filteredMatches$: BehaviorSubject<Array<Match>>;
+  loading$: BehaviorSubject<boolean>;
 
   teams: Array<Team> = [];
   activeTeam: Team = null;
@@ -54,6 +54,7 @@ export class SchedulePage extends CleanUpOnViewWillUnload {
       start:      this.start,
       end:        this.end
     });
+    this.loading$ = new BehaviorSubject(false);
     this.storage.get(SCHEDULE_FILTER_KEY).then(filters => {
       this.filters$.next(filters)
     }); //todo possible race condition with the filter dialog
@@ -73,12 +74,14 @@ export class SchedulePage extends CleanUpOnViewWillUnload {
     const filterModal = this.modalCtrl.create(FilterModalComponent, data);
     filterModal.present();
     filterModal.onDidDismiss(data => {
-      this.storage.set(SCHEDULE_FILTER_KEY, {
-        activeTeam: data.activeTeam,
-        start:      data.start,
-        end:        data.end
-      });
-      this.filters$.next(data)
+      if (data) {
+        this.storage.set(SCHEDULE_FILTER_KEY, {
+          activeTeam: data.activeTeam,
+          start: data.start,
+          end: data.end
+        });
+        this.filters$.next(data)
+      }
     });
   }
 
@@ -88,6 +91,7 @@ export class SchedulePage extends CleanUpOnViewWillUnload {
       .subscribe(teams => this.teams = teams);
 
     this.matches$ = this.matchService.fetchBetween(this.start, this.end);
+    this.matches$.subscribe(ms => this.loading$.next(ms.length > 0));
 
     Observable.combineLatest(this.filters$, this.matches$)
       .takeUntil(this.ngUnsubscribe)
