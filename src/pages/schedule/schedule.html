@@ -19,7 +19,7 @@
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <ion-list *ngIf="loading$ | async; else loading" [virtualScroll]="filteredMatches$ | async" no-lines>
+  <ion-list *ngIf="loading$ | async; else loading" [virtualScroll]="filteredMatches$ | async" approxItemHeight="175px" no-lines>
     <ion-item *virtualItem="let match">
       <match-card [match]="match"
                   [teams]="teams"
