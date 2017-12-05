@@ -19,7 +19,7 @@
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <ion-list [virtualScroll]="filteredMatches$ | async" no-lines>
+  <ion-list [virtualScroll]="filteredMatches$ | async" approxItemHeight="175px" no-lines>
     <ion-item *virtualItem="let match">
       <match-card [match]="match"
                   [teams]="teams"
