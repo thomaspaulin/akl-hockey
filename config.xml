@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-version-code="2" id="io.acgt.hockey" version="1.0.0" xmlns="http://www.w3.org/ns/widgets">
+<widget android-version-code="2" id="nz.paulin.hockey" version="1.0.0" xmlns="http://www.w3.org/ns/widgets">
   <name short="AKL Hockey">Auckland Hockey</name>
   <description>Get Auckland's ice hockey scene in your pocket!</description>
-  <author>Thomas Paulin</author>
+  <author email="hello@paulin.nz" href="https://thomaspaulin.github.io/akl-hockey/">Thomas Paulin</author>
   <content src="index.html"/>
   <access origin="https://snc-api-staging.herokuapp.com/*"/>
   <access origin="https://snc-api.herokuapp.com/*"/>
