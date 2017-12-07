@@ -2,7 +2,7 @@
   "name": "akl-hockey",
   "version": "1.0.0",
   "author": "Thomas Paulin",
-  "homepage": "http://example.com/",
+  "homepage": "https://thomaspaulin.github.io/akl-hockey/",
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",
