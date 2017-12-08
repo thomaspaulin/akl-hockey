@@ -1,26 +1,32 @@
-This is a starter template for [Ionic](http://ionicframework.com/docs/) projects.
 
-## How to use this template
+# Users
+The app parses data from [the Auckland SNC website](http://www.aucklandsnchockey.com) and makes it available to you on your phone more easily.
 
-*This template does not work on its own*. The shared files for each starter are found in the [ionic2-app-base repo](https://github.com/ionic-team/ionic2-app-base).
+## Schedule
+All the matches for the current season that are known about will be displayed on thise page.
 
-To use this template, either create a new ionic project using the ionic node.js utility, or copy the files from this repository into the [Starter App Base](https://github.com/ionic-team/ionic2-app-base).
+### Filtering
+Use the funnel icon up the top right to filter the schedule by team and/or a date range (inclusive)
 
-### With the Ionic CLI:
+## Teams
+All the teams that are known about split up by division
 
-Take the name after `ionic2-starter-`, and that is the name of the template to be used when using the `ionic start` command below:
+# Developers
+If you find a bug please report it on GitHub. Pull requests welcome.
 
+## Setup
+Install Ionic and Cordova
 ```bash
 $ sudo npm install -g ionic cordova
-$ ionic start mySideMenu sidemenu
 ```
 
-Then, to run it, cd into `mySideMenu` and run:
-
+## Running
+To run on an Android emulator:
 ```bash
-$ ionic cordova platform add ios
-$ ionic cordova run ios
+$ ionic cordova run android
 ```
 
-Substitute ios for android if not on a Mac.
-
+To run as a website:
+```bash
+$ ionic serve
+```
