@@ -91,7 +91,7 @@ export class SchedulePage extends CleanUpOnViewWillUnload {
       .subscribe(teams => this.teams = teams);
 
     this.matches$ = this.matchService.fetchBetween(this.start, this.end);
-    this.matches$.subscribe(ms => this.loading$.next(ms.length > 0));
+    this.matches$.subscribe(ms => this.loading$.next(ms.length <= 0));
 
     Observable.combineLatest(this.filters$, this.matches$)
       .takeUntil(this.ngUnsubscribe)
