@@ -1,3 +1,7 @@
+# 1.0.1
+### Bug Fixes
+* Fix loading logic
+
 # 1.0.0
 ### Features
 * **Teams**: Teams from the Auckland SNC league are listed
