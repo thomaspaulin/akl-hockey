@@ -12,7 +12,7 @@ Use the funnel icon up the top right to filter the schedule by team and/or a dat
 All the teams that are known about split up by division
 
 ## Downloads
-[v1.0.0](https://github.com/thomaspaulin/akl-hockey/releases/download/1.0.0/akl-hockey-unsigned.apk)
+[v1.0.1](https://github.com/thomaspaulin/akl-hockey/releases/download/1.0.1/akl-hockey-1.0.1.apk)
 
 # Developers
 If you find a bug please report it on GitHub. Pull requests welcome.
