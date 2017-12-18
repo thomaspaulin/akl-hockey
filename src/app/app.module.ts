@@ -18,6 +18,7 @@ import {TeamsProvider} from '../providers/team/team.provider';
 import {MatchesProvider} from '../providers/match/match.provider';
 import {IonicStorageModule} from '@ionic/storage';
 import {FilterModalComponent} from "../components/filter-modal/filter-modal";
+import {FirebaseService} from '../providers/firebase/firebase';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import {FilterModalComponent} from "../components/filter-modal/filter-modal";
     RinksProvider,
     DivisionsProvider,
     TeamsProvider,
-    MatchesProvider
+    MatchesProvider,
+    FirebaseService
   ]
 })
 export class AppModule {}

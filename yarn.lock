@@ -66,6 +66,10 @@
   version "4.4.2"
   resolved "https://registry.yarnpkg.com/@ionic-native/core/-/core-4.4.2.tgz#867872b00399fc20f4f4ebe19fc303cb9f7677d4"
 
+"@ionic-native/firebase@^4.5.2":
+  version "4.5.2"
+  resolved "https://registry.yarnpkg.com/@ionic-native/firebase/-/firebase-4.5.2.tgz#cd20ddc31f4fbd4885380b6c1e95884949664102"
+
 "@ionic-native/splash-screen@^4.4.2":
   version "4.4.2"
   resolved "https://registry.yarnpkg.com/@ionic-native/splash-screen/-/splash-screen-4.4.2.tgz#51bb5b005743e8d62b4e574b568e2ec5465bb76d"
@@ -721,6 +725,10 @@ cordova-common@^2.1.0:
 cordova-plugin-device@^1.1.4:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/cordova-plugin-device/-/cordova-plugin-device-1.1.7.tgz#fc94111be6932628c66868938ddf3dc82c9fbfe6"
+
+cordova-plugin-firebase@^0.1.25:
+  version "0.1.25"
+  resolved "https://registry.yarnpkg.com/cordova-plugin-firebase/-/cordova-plugin-firebase-0.1.25.tgz#7e1f96d8588a19d2218bb4dbca0d5c442f1e2651"
 
 cordova-plugin-statusbar@^2.2.2:
   version "2.3.0"

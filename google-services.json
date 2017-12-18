@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "331937458153",
+    "firebase_url": "https://akl-hockey.firebaseio.com",
+    "project_id": "akl-hockey",
+    "storage_bucket": "akl-hockey.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:331937458153:android:d5e656975cc9556f",
+        "android_client_info": {
+          "package_name": "nz.paulin.hockey"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "331937458153-clefudg3vmpla3h8osl222u0b6r5d0gk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "nz.paulin.hockey",
+            "certificate_hash": "0a66c634ccb305f809275e8c3997f8818435e517"
+          }
+        },
+        {
+          "client_id": "331937458153-2elhj9dpttq82la44bd1fa6a8a8i6adc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLH74aIoT0PYdLjflDLkqoC3Xf8fdDRR8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "331937458153-2elhj9dpttq82la44bd1fa6a8a8i6adc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
